@@ -1,0 +1,40 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="tr" class="dark">
+
+@await Component.InvokeAsync("_HomeLayoutBileşenlerComponentPartial")
+
+<body class="bg-bg text-white font-display overflow-x-hidden">
+
+    <!-- ===== ARKA PLAN EFEKTLERİ KONTEYNERİ ===== -->
+    @await Component.InvokeAsync("_HomeLayoutBackGroundEffectComponentPartial")
+
+    <!-- ===== SIDEBAR MENÜ (SABİT ŞEFFAF PANEL) ===== -->
+    @await Component.InvokeAsync("_HomeLayoutSlideBarComponentPartial")
+
+    <!-- ===== MENÜ AÇMA BUTONU (SADECE MOBİL) ===== -->
+    @await Component.InvokeAsync("_OpenMenuMobilComponentPartial")
+
+    <!-- ===== ANA İÇERİK ALANI ===== -->
+    <main id="mainContent" class="relative z-10 transition-all duration-300">
+
+        <!-- 1. BÖLÜM: ANA SAYFA (HERO) -->
+        @await Component.InvokeAsync("_MainPageComponentPartial")
+        @await Component.InvokeAsync("_AboutComponentPartial")
+        @await Component.InvokeAsync("_ExperienceComponentPartial")
+        @await Component.InvokeAsync("_EducationComponentPartial")
+        @await Component.InvokeAsync("_SkillsComponentPartial")
+        @await Component.InvokeAsync("_CertificationComponentPartial")
+        @await Component.InvokeAsync("_ProjectComponentPartial")
+        @await Component.InvokeAsync("_ContactComponentPartial")
+    </main>
+
+    <!-- ===== JAVASCRIPT KODLARI ===== -->
+    @await Component.InvokeAsync("_HomeLayoutScriptsComponentPartial")
+</body>
+
+</html>

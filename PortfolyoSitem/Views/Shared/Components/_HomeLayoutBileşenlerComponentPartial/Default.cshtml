@@ -1,0 +1,325 @@
+﻿<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uğur Nalbant | Portfolyo</title>
+
+    <!-- Google Fonts bağlantıları: Yazı tiplerini yükler -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Noto+Sans:wght@400;500&display=swap"
+          rel="stylesheet">
+    <!-- İkonlar için Google Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+
+    <!-- Tailwind CSS kütüphanesi (CDN üzerinden hızlı stil kullanımı için) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Tailwind Konfigürasyonu: Renkler ve fontları özelleştirir -->
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        bg: "#050505",      // Daha koyu arka plan
+                        card: "#121212",    // Kart arka plan rengi
+                        primary: "#ff4d00", // Canlı Kırmızı-Turuncu
+                        secondary: "#ffb700", // Canlı Sarı
+                        accent: "#ff8800",  // Ara ton Turuncu
+                        muted: "#a1a1aa",   // Sönük metin rengi
+                    },
+                    fontFamily: {
+                        display: ["Space Grotesk", "sans-serif"], // Başlık fontu
+                        body: ["Noto Sans", "sans-serif"],       // Gövde metni fontu
+                    },
+                    animation: {
+                        'gradient-x': 'gradient-x 15s ease infinite',
+                    },
+                    keyframes: {
+                        'gradient-x': {
+                            '0%, 100%': {
+                                'background-size': '200% 200%',
+                                'background-position': 'left center'
+                            },
+                            '50%': {
+                                'background-size': '200% 200%',
+                                'background-position': 'right center'
+                            },
+                        },
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* ===== SCROLLBAR DÜZENLEMELERİ ===== */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Kaydırma çubuğunun genişliği ve rengi */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #050505;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+
+            ::-webkit-scrollbar-thumb:hover {
+                background: #ff4d00;
+            }
+
+        /* ===== SCROLL REVEAL EFEKTİ ===== */
+        /* Bölümlerin başlangıç durumu: Görünmez ve biraz aşağıda */
+        .reveal-section {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s ease-out;
+            /* 1 saniyelik yumuşak geçiş */
+        }
+
+            /* Bölüm görünür olduğunda alacağı stil */
+            .reveal-section.active {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        /* ===== ARKA PLAN EFEKTLERİ (Spotlight & Sparkles) ===== */
+        /* Işık huzmesi efekti */
+        .spotlight {
+            position: absolute;
+            bottom: -35%;
+            height: 170vh;
+            width: 420px;
+            transform-origin: bottom center;
+            pointer-events: none;
+            mix-blend-mode: screen;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+            .spotlight::before {
+                content: "";
+                position: absolute;
+                inset: 0;
+                background: linear-gradient(to top, rgba(255, 180, 0, 0.42) 0%,
+                /* Sarı */
+                rgba(255, 100, 0, 0.26) 30%,
+                /* Turuncu */
+                rgba(255, 50, 0, 0.12) 55%,
+                /* Kırmızı */
+                transparent 75%);
+                clip-path: polygon(48% 100%, 52% 100%, 100% 0%, 0% 0%);
+                filter: blur(18px);
+                z-index: 1;
+            }
+
+            .spotlight::after {
+                content: "";
+                position: absolute;
+                left: 50%;
+                bottom: 0;
+                width: 48px;
+                height: 100%;
+                transform: translateX(-50%);
+                background: linear-gradient(to top, rgba(255, 200, 50, 0.75), rgba(255, 100, 0, 0.2), transparent);
+                filter: blur(7px);
+                z-index: 2;
+            }
+
+        /* Parıltı efektleri (Sabit arka plan) */
+        .sparkles {
+            position: absolute;
+            inset: 0;
+            z-index: 3;
+            opacity: 0.6;
+            mix-blend-mode: screen;
+            background-image:
+            /* Küçük ve Sık Parıltılar */
+            radial-gradient(1.5px 1.5px at 10% 10%, rgba(255, 255, 255, 1) 50%, transparent 100%), radial-gradient(1px 1px at 20% 30%, rgba(255, 200, 0, 1) 50%, transparent 100%), radial-gradient(2px 2px at 30% 70%, rgba(255, 100, 0, 0.9) 50%, transparent 100%), radial-gradient(1.5px 1.5px at 40% 40%, rgba(255, 255, 255, 0.8) 50%, transparent 100%), radial-gradient(1px 1px at 50% 90%, rgba(255, 220, 100, 1) 50%, transparent 100%), radial-gradient(2px 2px at 60% 20%, rgba(255, 80, 0, 0.8) 50%, transparent 100%), radial-gradient(1.5px 1.5px at 70% 60%, rgba(255, 255, 255, 0.9) 50%, transparent 100%), radial-gradient(1px 1px at 80% 80%, rgba(255, 180, 50, 1) 50%, transparent 100%), radial-gradient(2px 2px at 90% 10%, rgba(255, 120, 0, 0.8) 50%, transparent 100%),
+            /* Orta Boy Parıltılar */
+            radial-gradient(1px 1px at 15% 85%, rgba(255, 255, 255, 0.7) 50%, transparent 100%), radial-gradient(1px 1px at 85% 15%, rgba(255, 200, 0, 0.7) 50%, transparent 100%);
+            /* Sıklığı artırmak için boyutu küçültüyoruz */
+            background-size: 300px 450px;
+            animation: risingSparkles 8s linear infinite;
+        }
+
+        /* Parıltıların yukarı doğru hareket animasyonu */
+        @@keyframes risingSparkles {
+            0% {
+                transform: translateY(50px) scale(1);
+                opacity: 0;
+            }
+
+            20% {
+                opacity: 0.8;
+            }
+
+            80% {
+                opacity: 0.6;
+            }
+
+            100% {
+                transform: translateY(-250px) scale(1.1);
+                opacity: 0;
+            }
+        }
+
+        /* Işık huzmelerinin sallanma animasyonları (Hızlandırılmış ve Opaklık Değişimli) */
+        /* Sweep A: Orta Hızda Geniş Tarama */
+        @@keyframes sweepA {
+            0% {
+                transform: rotate(-25deg);
+                opacity: .3;
+            }
+
+            50% {
+                transform: rotate(25deg);
+                opacity: .6;
+            }
+
+            100% {
+                transform: rotate(-25deg);
+                opacity: .3;
+            }
+        }
+
+        /* Sweep B: Ters Yönde Orta Hız */
+        @@keyframes sweepB {
+            0% {
+                transform: rotate(30deg);
+                opacity: .3;
+            }
+
+            50% {
+                transform: rotate(-30deg);
+                opacity: .6;
+            }
+
+            100% {
+                transform: rotate(30deg);
+                opacity: .3;
+            }
+        }
+
+        /* Sweep C: Yavaş ve Geniş (Merkezden Dışa) */
+        @@keyframes sweepC {
+            0% {
+                transform: rotate(-40deg);
+                opacity: .2;
+            }
+
+            50% {
+                transform: rotate(15deg);
+                opacity: .5;
+            }
+
+            100% {
+                transform: rotate(-40deg);
+                opacity: .2;
+            }
+        }
+
+        /* Sweep D: Hızlı ve Dar (Odaklanmış) */
+        @@keyframes sweepD {
+            0% {
+                transform: rotate(15deg);
+                opacity: .4;
+            }
+
+            50% {
+                transform: rotate(-15deg);
+                opacity: .7;
+            }
+
+            100% {
+                transform: rotate(15deg);
+                opacity: .4;
+            }
+        }
+
+        /* Yeni Geniş Açılı Animasyonlar (Daha Hızlı) */
+        /* Sweep E: Çok Geniş Kapsamlı */
+        @@keyframes sweepE {
+            0% {
+                transform: rotate(-45deg);
+                opacity: .2;
+            }
+
+            50% {
+                transform: rotate(45deg);
+                opacity: .5;
+            }
+
+            100% {
+                transform: rotate(-45deg);
+                opacity: .2;
+            }
+        }
+
+        /* Sweep F: Ters Yönde Çok Geniş */
+        @@keyframes sweepF {
+            0% {
+                transform: rotate(45deg);
+                opacity: .2;
+            }
+
+            50% {
+                transform: rotate(-45deg);
+                opacity: .5;
+            }
+
+            100% {
+                transform: rotate(45deg);
+                opacity: .2;
+            }
+        }
+
+        /* Sweep G: Asimetrik Tarama */
+        @@keyframes sweepG {
+            0% {
+                transform: rotate(-50deg);
+                opacity: .2;
+            }
+
+            50% {
+                transform: rotate(20deg);
+                opacity: .5;
+            }
+
+            100% {
+                transform: rotate(-50deg);
+                opacity: .2;
+            }
+        }
+
+        /* Dairesel Progress Bar Animasyonu */
+        .progress-ring-circle {
+            transition: stroke-dashoffset 1.5s ease-in-out;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+
+        .skill-card:hover .progress-ring-circle {
+            stroke: #ff4d00;
+            /* Hover rengi (primary) */
+            filter: drop-shadow(0 0 5px rgba(255, 77, 0, 0.5));
+        }
+    </style>
+</head>

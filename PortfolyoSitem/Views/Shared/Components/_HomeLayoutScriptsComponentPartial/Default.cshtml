@@ -1,0 +1,198 @@
+﻿<script>
+    // 1. SIDEBAR TOGGLE İŞLEVİ (SADECE MOBİL İÇİN)
+    const sidebar = document.getElementById('sidebar');
+    const toggleBtn = document.getElementById('toggleSidebar');
+    const toggleIcon = document.getElementById('toggleIcon');
+    // mainContent referansını tutuyoruz ama masaüstünde artık JS ile müdahale etmeyeceğiz (CSS hallediyor)
+
+    // Sidebar'ı Aç (Mobil)
+    function openSidebar() {
+        sidebar.classList.remove('-translate-x-full');
+        toggleIcon.innerText = 'close';
+    }
+
+    // Sidebar'ı Kapat (Mobil)
+    function closeSidebar() {
+        sidebar.classList.add('-translate-x-full');
+        toggleIcon.innerText = 'menu';
+    }
+
+    // Toggle Butonuna Tıklama
+    toggleBtn.addEventListener('click', () => {
+        const isOpen = !sidebar.classList.contains('-translate-x-full');
+        if (isOpen) {
+            closeSidebar();
+        } else {
+            openSidebar();
+        }
+    });
+
+    // Linklere tıklandığında (Sadece mobilde kapat)
+    // Masaüstünde sidebar sabit olduğu için kapanmamalı
+    document.querySelectorAll('aside nav a').forEach(link => {
+        link.addEventListener('click', () => {
+            if (window.innerWidth < 768) {
+                closeSidebar();
+            }
+        });
+    });
+
+    // Resize olayında mobil menü durumunu sıfırla
+    window.addEventListener('resize', () => {
+        if (window.innerWidth >= 768) {
+            // Masaüstüne geçince sidebar'ı görünür kıl (CSS zaten yapıyor ama JS class çakışmasını önle)
+            sidebar.classList.remove('-translate-x-full');
+        } else {
+            // Mobile geçince varsayılan kapalı olsun
+            sidebar.classList.add('-translate-x-full');
+            toggleIcon.innerText = 'menu';
+        }
+    });
+
+    // 2. SCROLL REVEAL İŞLEVİ (BÖLÜMLERİN YUKARIDAN AŞAĞI BELİRMESİ)
+    // Intersection Observer API kullanarak elementlerin ekrana girmesini izliyoruz
+    const observerOptions = {
+        root: null,          // Viewport'u baz al
+        rootMargin: '0px',   // Kenar boşluğu yok
+        threshold: 0.15      // Elementin %15'i göründüğünde tetikle
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            // Eğer element ekranda görünüyorsa
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active'); // 'active' sınıfını ekle (Animasyonu başlat)
+            }
+        });
+    }, observerOptions);
+
+    // '.reveal-section' sınıfına sahip tüm elementleri seç ve izlemeye başla
+    document.querySelectorAll('.reveal-section').forEach(section => {
+        observer.observe(section);
+    });
+
+    // NOT: Spotlight animasyonları artık CSS (@@keyframes) üzerinden yönetiliyor.
+    // JS ile dinamik oluşturma iptal edildi, daha doğal bir görünüm için.
+
+    // 3. HERO BUTON CLICK EVENT (DEVAM ET)
+    const heroBtn = document.getElementById('hero-cta');
+    if (heroBtn) {
+        heroBtn.addEventListener('click', (e) => {
+            e.preventDefault(); // Varsayılan atlamayı engelle
+            const targetSection = document.getElementById('about');
+            if (targetSection) {
+                targetSection.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    }
+
+    // 4. PROJE FİLTRELEME İŞLEVİ
+    const filterBtns = document.querySelectorAll('#project-filters button');
+    const projects = document.querySelectorAll('.project-card');
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Aktif buton stilini güncelle
+            filterBtns.forEach(b => {
+                b.classList.remove('bg-primary/10', 'text-primary', 'border-primary', 'active-filter');
+                b.classList.add('bg-white/5', 'text-gray-400', 'border-white/10');
+            });
+
+            // Seçili butona aktif stil ekle
+            btn.classList.remove('bg-white/5', 'text-gray-400', 'border-white/10');
+            btn.classList.add('bg-primary/10', 'text-primary', 'border-primary', 'active-filter');
+
+            const filterValue = btn.getAttribute('data-filter');
+
+            // Projeleri filtrele
+            projects.forEach(project => {
+                if (filterValue === 'all' || project.getAttribute('data-category') === filterValue) {
+                    project.classList.remove('hidden');
+                    // Animasyonlu giriş için ufak bir gecikme efekti
+                    project.style.opacity = '0';
+                    setTimeout(() => {
+                        project.style.opacity = '1';
+                    }, 50);
+                } else {
+                    project.classList.add('hidden');
+                }
+            });
+        });
+    });
+
+    // 5. PROJE SLİDER BUTONLARI
+    const projectsGrid = document.getElementById('projects-grid');
+    const prevBtn = document.getElementById('prevProject');
+    const nextBtn = document.getElementById('nextProject');
+
+    if (projectsGrid && prevBtn && nextBtn) {
+        prevBtn.addEventListener('click', () => {
+            const itemWidth = projectsGrid.querySelector('article').offsetWidth;
+            const gap = 24; // gap-6
+            projectsGrid.scrollBy({
+                left: -(itemWidth + gap),
+                behavior: 'smooth'
+            });
+        });
+
+        nextBtn.addEventListener('click', () => {
+            const itemWidth = projectsGrid.querySelector('article').offsetWidth;
+            const gap = 24; // gap-6
+            projectsGrid.scrollBy({
+                left: (itemWidth + gap),
+                behavior: 'smooth'
+            });
+        });
+    }
+
+    // 6. SERTİFİKA SLİDER BUTONLARI
+    const certsGrid = document.getElementById('certificates-grid');
+    const prevCertBtn = document.getElementById('prevCert');
+    const nextCertBtn = document.getElementById('nextCert');
+
+    if (certsGrid && prevCertBtn && nextCertBtn) {
+        prevCertBtn.addEventListener('click', () => {
+            // Sertifika kartı div olduğu için div seçiyoruz
+            const itemWidth = certsGrid.querySelector('div').offsetWidth;
+            const gap = 24; // gap-6
+            certsGrid.scrollBy({
+                left: -(itemWidth + gap),
+                behavior: 'smooth'
+            });
+        });
+
+        nextCertBtn.addEventListener('click', () => {
+            const itemWidth = certsGrid.querySelector('div').offsetWidth;
+            const gap = 24; // gap-6
+            certsGrid.scrollBy({
+                left: (itemWidth + gap),
+                behavior: 'smooth'
+            });
+        });
+    }
+
+    // 7. YETENEKLER SLİDER BUTONLARI
+    function scrollSkills(direction) {
+        const skillsGrid = document.getElementById('skills-grid');
+        if (!skillsGrid) return;
+
+        // Kart genişliği + gap
+        const itemWidth = skillsGrid.querySelector('.skill-card').offsetWidth;
+        const gap = 16; // gap-4
+
+        if (direction === 'left') {
+            skillsGrid.scrollBy({
+                left: -(itemWidth + gap),
+                behavior: 'smooth'
+            });
+        } else {
+            skillsGrid.scrollBy({
+                left: (itemWidth + gap),
+                behavior: 'smooth'
+            });
+        }
+    }
+</script>

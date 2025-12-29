@@ -1,0 +1,1449 @@
+<!DOCTYPE html>
+<html lang="tr" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uğur Nalbant | Portfolyo</title>
+
+    <!-- Google Fonts bağlantıları: Yazı tiplerini yükler -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=Noto+Sans:wght@400;500&display=swap"
+        rel="stylesheet">
+    <!-- İkonlar için Google Material Symbols -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+
+    <!-- Tailwind CSS kütüphanesi (CDN üzerinden hızlı stil kullanımı için) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Tailwind Konfigürasyonu: Renkler ve fontları özelleştirir -->
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        bg: "#050505",      // Daha koyu arka plan
+                        card: "#121212",    // Kart arka plan rengi
+                        primary: "#ff4d00", // Canlı Kırmızı-Turuncu
+                        secondary: "#ffb700", // Canlı Sarı
+                        accent: "#ff8800",  // Ara ton Turuncu
+                        muted: "#a1a1aa",   // Sönük metin rengi
+                    },
+                    fontFamily: {
+                        display: ["Space Grotesk", "sans-serif"], // Başlık fontu
+                        body: ["Noto Sans", "sans-serif"],       // Gövde metni fontu
+                    },
+                    animation: {
+                        'gradient-x': 'gradient-x 15s ease infinite',
+                    },
+                    keyframes: {
+                        'gradient-x': {
+                            '0%, 100%': {
+                                'background-size': '200% 200%',
+                                'background-position': 'left center'
+                            },
+                            '50%': {
+                                'background-size': '200% 200%',
+                                'background-position': 'right center'
+                            },
+                        },
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* ===== SCROLLBAR DÜZENLEMELERİ ===== */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Kaydırma çubuğunun genişliği ve rengi */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #050505;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #ff4d00;
+        }
+
+        /* ===== SCROLL REVEAL EFEKTİ ===== */
+        /* Bölümlerin başlangıç durumu: Görünmez ve biraz aşağıda */
+        .reveal-section {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s ease-out;
+            /* 1 saniyelik yumuşak geçiş */
+        }
+
+        /* Bölüm görünür olduğunda alacağı stil */
+        .reveal-section.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== ARKA PLAN EFEKTLERİ (Spotlight & Sparkles) ===== */
+        /* Işık huzmesi efekti */
+        .spotlight {
+            position: absolute;
+            bottom: -35%;
+            height: 170vh;
+            width: 420px;
+            transform-origin: bottom center;
+            pointer-events: none;
+            mix-blend-mode: screen;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .spotlight::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top,
+                    rgba(255, 180, 0, 0.42) 0%,
+                    /* Sarı */
+                    rgba(255, 100, 0, 0.26) 30%,
+                    /* Turuncu */
+                    rgba(255, 50, 0, 0.12) 55%,
+                    /* Kırmızı */
+                    transparent 75%);
+            clip-path: polygon(48% 100%, 52% 100%, 100% 0%, 0% 0%);
+            filter: blur(18px);
+            z-index: 1;
+        }
+
+        .spotlight::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            width: 48px;
+            height: 100%;
+            transform: translateX(-50%);
+            background: linear-gradient(to top,
+                    rgba(255, 200, 50, 0.75),
+                    rgba(255, 100, 0, 0.2),
+                    transparent);
+            filter: blur(7px);
+            z-index: 2;
+        }
+
+        /* Parıltı efektleri (Sabit arka plan) */
+        .sparkles {
+            position: absolute;
+            inset: 0;
+            z-index: 3;
+            opacity: 0.6;
+            mix-blend-mode: screen;
+            background-image:
+                /* Küçük ve Sık Parıltılar */
+                radial-gradient(1.5px 1.5px at 10% 10%, rgba(255, 255, 255, 1) 50%, transparent 100%),
+                radial-gradient(1px 1px at 20% 30%, rgba(255, 200, 0, 1) 50%, transparent 100%),
+                radial-gradient(2px 2px at 30% 70%, rgba(255, 100, 0, 0.9) 50%, transparent 100%),
+                radial-gradient(1.5px 1.5px at 40% 40%, rgba(255, 255, 255, 0.8) 50%, transparent 100%),
+                radial-gradient(1px 1px at 50% 90%, rgba(255, 220, 100, 1) 50%, transparent 100%),
+                radial-gradient(2px 2px at 60% 20%, rgba(255, 80, 0, 0.8) 50%, transparent 100%),
+                radial-gradient(1.5px 1.5px at 70% 60%, rgba(255, 255, 255, 0.9) 50%, transparent 100%),
+                radial-gradient(1px 1px at 80% 80%, rgba(255, 180, 50, 1) 50%, transparent 100%),
+                radial-gradient(2px 2px at 90% 10%, rgba(255, 120, 0, 0.8) 50%, transparent 100%),
+
+                /* Orta Boy Parıltılar */
+                radial-gradient(1px 1px at 15% 85%, rgba(255, 255, 255, 0.7) 50%, transparent 100%),
+                radial-gradient(1px 1px at 85% 15%, rgba(255, 200, 0, 0.7) 50%, transparent 100%);
+
+            /* Sıklığı artırmak için boyutu küçültüyoruz */
+            background-size: 300px 450px;
+            animation: risingSparkles 8s linear infinite;
+        }
+
+        /* Parıltıların yukarı doğru hareket animasyonu */
+        @keyframes risingSparkles {
+            0% {
+                transform: translateY(50px) scale(1);
+                opacity: 0;
+            }
+
+            20% {
+                opacity: 0.8;
+            }
+
+            80% {
+                opacity: 0.6;
+            }
+
+            100% {
+                transform: translateY(-250px) scale(1.1);
+                opacity: 0;
+            }
+        }
+
+        /* Işık huzmelerinin sallanma animasyonları (Hızlandırılmış ve Opaklık Değişimli) */
+        /* Sweep A: Orta Hızda Geniş Tarama */
+        @keyframes sweepA {
+            0% {
+                transform: rotate(-25deg);
+                opacity: .3;
+            }
+
+            50% {
+                transform: rotate(25deg);
+                opacity: .6;
+            }
+
+            100% {
+                transform: rotate(-25deg);
+                opacity: .3;
+            }
+        }
+
+        /* Sweep B: Ters Yönde Orta Hız */
+        @keyframes sweepB {
+            0% {
+                transform: rotate(30deg);
+                opacity: .3;
+            }
+
+            50% {
+                transform: rotate(-30deg);
+                opacity: .6;
+            }
+
+            100% {
+                transform: rotate(30deg);
+                opacity: .3;
+            }
+        }
+
+        /* Sweep C: Yavaş ve Geniş (Merkezden Dışa) */
+        @keyframes sweepC {
+            0% {
+                transform: rotate(-40deg);
+                opacity: .2;
+            }
+
+            50% {
+                transform: rotate(15deg);
+                opacity: .5;
+            }
+
+            100% {
+                transform: rotate(-40deg);
+                opacity: .2;
+            }
+        }
+
+        /* Sweep D: Hızlı ve Dar (Odaklanmış) */
+        @keyframes sweepD {
+            0% {
+                transform: rotate(15deg);
+                opacity: .4;
+            }
+
+            50% {
+                transform: rotate(-15deg);
+                opacity: .7;
+            }
+
+            100% {
+                transform: rotate(15deg);
+                opacity: .4;
+            }
+        }
+
+        /* Yeni Geniş Açılı Animasyonlar (Daha Hızlı) */
+        /* Sweep E: Çok Geniş Kapsamlı */
+        @keyframes sweepE {
+            0% {
+                transform: rotate(-45deg);
+                opacity: .2;
+            }
+
+            50% {
+                transform: rotate(45deg);
+                opacity: .5;
+            }
+
+            100% {
+                transform: rotate(-45deg);
+                opacity: .2;
+            }
+        }
+
+        /* Sweep F: Ters Yönde Çok Geniş */
+        @keyframes sweepF {
+            0% {
+                transform: rotate(45deg);
+                opacity: .2;
+            }
+
+            50% {
+                transform: rotate(-45deg);
+                opacity: .5;
+            }
+
+            100% {
+                transform: rotate(45deg);
+                opacity: .2;
+            }
+        }
+
+        /* Sweep G: Asimetrik Tarama */
+        @keyframes sweepG {
+            0% {
+                transform: rotate(-50deg);
+                opacity: .2;
+            }
+
+            50% {
+                transform: rotate(20deg);
+                opacity: .5;
+            }
+
+            100% {
+                transform: rotate(-50deg);
+                opacity: .2;
+            }
+        }
+
+        /* Dairesel Progress Bar Animasyonu */
+        .progress-ring-circle {
+            transition: stroke-dashoffset 1.5s ease-in-out;
+            transform: rotate(-90deg);
+            transform-origin: 50% 50%;
+        }
+
+        .skill-card:hover .progress-ring-circle {
+            stroke: #ff4d00;
+            /* Hover rengi (primary) */
+            filter: drop-shadow(0 0 5px rgba(255, 77, 0, 0.5));
+        }
+    </style>
+</head>
+
+<body class="bg-bg text-white font-display overflow-x-hidden">
+
+    <!-- ===== ARKA PLAN EFEKTLERİ KONTEYNERİ ===== -->
+    <div id="bg-container" class="fixed inset-0 z-0 pointer-events-none overflow-hidden flex justify-center items-end">
+        <!-- Işıklar (Sabit Taç Şeklinde) -->
+        <!-- Sol Taraf -->
+        <div class="spotlight -rotate-[60deg] opacity-20">
+            <div class="sparkles" style="animation-delay: -1s;"></div>
+        </div>
+        <div class="spotlight -rotate-[45deg] opacity-30">
+            <div class="sparkles" style="animation-delay: -2s;"></div>
+        </div>
+        <div class="spotlight -rotate-[30deg] opacity-40">
+            <div class="sparkles" style="animation-delay: -3s;"></div>
+        </div>
+        <div class="spotlight -rotate-[15deg] opacity-50">
+            <div class="sparkles" style="animation-delay: -4s;"></div>
+        </div>
+
+        <!-- Merkez -->
+        <div class="spotlight rotate-0 opacity-60">
+            <div class="sparkles" style="animation-delay: -5s;"></div>
+        </div>
+
+        <!-- Sağ Taraf -->
+        <div class="spotlight rotate-[15deg] opacity-50">
+            <div class="sparkles" style="animation-delay: -6s;"></div>
+        </div>
+        <div class="spotlight rotate-[30deg] opacity-40">
+            <div class="sparkles" style="animation-delay: -7s;"></div>
+        </div>
+        <div class="spotlight rotate-[45deg] opacity-30">
+            <div class="sparkles" style="animation-delay: -8s;"></div>
+        </div>
+        <div class="spotlight rotate-[60deg] opacity-20">
+            <div class="sparkles" style="animation-delay: -9s;"></div>
+        </div>
+
+        <div class="absolute inset-0 opacity-[0.035] bg-[url('https://grainy-gradients.vercel.app/noise.svg')]"></div>
+    </div>
+
+    <!-- ===== SIDEBAR MENÜ (SABİT ŞEFFAF PANEL) ===== -->
+    <aside id="sidebar"
+        class="fixed left-0 top-0 h-full w-64 bg-black/80 backdrop-blur-xl z-50 transform -translate-x-full transition-all duration-300 border-r border-white/10
+               md:translate-x-0 md:bg-white/5 md:backdrop-blur-md md:border md:border-white/5 md:rounded-full md:h-auto md:top-1/2 md:-translate-y-1/2 md:left-6 md:w-20 md:py-8 md:shadow-lg md:z-40">
+
+        <!-- Menü Linkleri -->
+        <nav class="flex flex-col gap-6 mt-4 md:mt-0 px-6 md:px-0 pt-20 md:pt-0 items-center justify-center">
+            <!-- Ana Sayfa -->
+            <a href="#home"
+                class="relative group flex items-center justify-center w-12 h-12 rounded-full hover:bg-white/10 transition-all duration-300">
+                <span
+                    class="material-symbols-outlined text-2xl text-gray-300 group-hover:text-primary group-hover:scale-110 transition-transform">home</span>
+                <!-- Tooltip (Sadece Masaüstü) -->
+                <span
+                    class="absolute left-full ml-4 px-3 py-1 bg-white/10 backdrop-blur-md border border-white/5 rounded-lg text-sm text-white opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300 pointer-events-none hidden md:block whitespace-nowrap">
+                    Ana Sayfa
+                </span>
+                <!-- Mobil Metin -->
+                <span class="md:hidden ml-4 text-xl font-medium text-gray-300">Ana Sayfa</span>
+            </a>
+
+            <!-- Hakkımda -->
+            <a href="#about"
+                class="relative group flex items-center justify-center w-12 h-12 rounded-full hover:bg-white/10 transition-all duration-300">
+                <span
+                    class="material-symbols-outlined text-2xl text-gray-300 group-hover:text-primary group-hover:scale-110 transition-transform">person</span>
+                <span
+                    class="absolute left-full ml-4 px-3 py-1 bg-white/10 backdrop-blur-md border border-white/5 rounded-lg text-sm text-white opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300 pointer-events-none hidden md:block whitespace-nowrap">
+                    Hakkımda
+                </span>
+                <span class="md:hidden ml-4 text-xl font-medium text-gray-300">Hakkımda</span>
+            </a>
+
+            <!-- Deneyimlerim (YENİ) -->
+            <a href="#experience"
+                class="relative group flex items-center justify-center w-12 h-12 rounded-full hover:bg-white/10 transition-all duration-300">
+                <span
+                    class="material-symbols-outlined text-2xl text-gray-300 group-hover:text-primary group-hover:scale-110 transition-transform">work_history</span>
+                <span
+                    class="absolute left-full ml-4 px-3 py-1 bg-white/10 backdrop-blur-md border border-white/5 rounded-lg text-sm text-white opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300 pointer-events-none hidden md:block whitespace-nowrap">
+                    Deneyimlerim
+                </span>
+                <span class="md:hidden ml-4 text-xl font-medium text-gray-300">Deneyimlerim</span>
+            </a>
+
+            <!-- Eğitim Bilgilerim (YENİ) -->
+            <a href="#education"
+                class="relative group flex items-center justify-center w-12 h-12 rounded-full hover:bg-white/10 transition-all duration-300">
+                <span
+                    class="material-symbols-outlined text-2xl text-gray-300 group-hover:text-primary group-hover:scale-110 transition-transform">school</span>
+                <span
+                    class="absolute left-full ml-4 px-3 py-1 bg-white/10 backdrop-blur-md border border-white/5 rounded-lg text-sm text-white opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300 pointer-events-none hidden md:block whitespace-nowrap">
+                    Eğitim Bilgilerim
+                </span>
+                <span class="md:hidden ml-4 text-xl font-medium text-gray-300">Eğitim</span>
+            </a>
+
+            <!-- Yetenekler -->
+            <a href="#skills"
+                class="relative group flex items-center justify-center w-12 h-12 rounded-full hover:bg-white/10 transition-all duration-300">
+                <span
+                    class="material-symbols-outlined text-2xl text-gray-300 group-hover:text-primary group-hover:scale-110 transition-transform">handyman</span>
+                <span
+                    class="absolute left-full ml-4 px-3 py-1 bg-white/10 backdrop-blur-md border border-white/5 rounded-lg text-sm text-white opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300 pointer-events-none hidden md:block whitespace-nowrap">
+                    Yetenekler
+                </span>
+                <span class="md:hidden ml-4 text-xl font-medium text-gray-300">Yetenekler</span>
+            </a>
+
+            <!-- Sertifikalarım (YENİ) -->
+            <a href="#certificates"
+                class="relative group flex items-center justify-center w-12 h-12 rounded-full hover:bg-white/10 transition-all duration-300">
+                <span
+                    class="material-symbols-outlined text-2xl text-gray-300 group-hover:text-primary group-hover:scale-110 transition-transform">verified</span>
+                <span
+                    class="absolute left-full ml-4 px-3 py-1 bg-white/10 backdrop-blur-md border border-white/5 rounded-lg text-sm text-white opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300 pointer-events-none hidden md:block whitespace-nowrap">
+                    Sertifikalarım
+                </span>
+                <span class="md:hidden ml-4 text-xl font-medium text-gray-300">Sertifikalar</span>
+            </a>
+
+            <!-- Projeler -->
+            <a href="#projects"
+                class="relative group flex items-center justify-center w-12 h-12 rounded-full hover:bg-white/10 transition-all duration-300">
+                <span
+                    class="material-symbols-outlined text-2xl text-gray-300 group-hover:text-primary group-hover:scale-110 transition-transform">rocket_launch</span>
+                <span
+                    class="absolute left-full ml-4 px-3 py-1 bg-white/10 backdrop-blur-md border border-white/5 rounded-lg text-sm text-white opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300 pointer-events-none hidden md:block whitespace-nowrap">
+                    Projeler
+                </span>
+                <span class="md:hidden ml-4 text-xl font-medium text-gray-300">Projeler</span>
+            </a>
+
+            <!-- İletişim -->
+            <a href="#contact"
+                class="relative group flex items-center justify-center w-12 h-12 rounded-full hover:bg-white/10 transition-all duration-300">
+                <span
+                    class="material-symbols-outlined text-2xl text-gray-300 group-hover:text-primary group-hover:scale-110 transition-transform">mail</span>
+                <span
+                    class="absolute left-full ml-4 px-3 py-1 bg-white/10 backdrop-blur-md border border-white/5 rounded-lg text-sm text-white opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300 pointer-events-none hidden md:block whitespace-nowrap">
+                    İletişim
+                </span>
+                <span class="md:hidden ml-4 text-xl font-medium text-gray-300">İletişim</span>
+            </a>
+        </nav>
+
+        <div class="absolute bottom-10 left-6 text-sm text-muted md:hidden">
+            <p>&copy; 2025 Uğur Nalbant</p>
+        </div>
+    </aside>
+
+    <!-- ===== MENÜ AÇMA BUTONU (SADECE MOBİL) ===== -->
+    <button id="toggleSidebar"
+        class="fixed top-6 left-6 z-[60] bg-card/80 backdrop-blur p-2 rounded-full border border-white/10 text-white hover:text-primary hover:border-primary transition-all shadow-lg md:hidden">
+        <span class="material-symbols-outlined text-2xl" id="toggleIcon">menu</span>
+    </button>
+
+    <!-- ===== ANA İÇERİK ALANI ===== -->
+    <!-- md:ml-72: Sidebar (w-64) + Sol Boşluk (left-4) + Sağ Boşluk (4) = ~72 birimlik margin -->
+    <main id="mainContent" class="relative z-10 transition-all duration-300">
+
+        <!-- 1. BÖLÜM: ANA SAYFA (HERO) -->
+        
+
+        <!-- 2. BÖLÜM: HAKKIMDA -->
+        <section id="about"
+            class="min-h-screen flex flex-col justify-center px-8 md:px-20 py-20 border-t border-white/5 reveal-section">
+            <div class="max-w-4xl mx-auto w-full">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-4 relative inline-block">
+                        <span
+                            class="absolute -inset-4 bg-gradient-to-r from-red-600 via-orange-500 to-yellow-400 opacity-20 blur-xl rounded-full"></span>
+                        <span class="relative text-white uppercase tracking-wider">Hakkımda</span>
+                    </h2>
+                    <p class="text-muted max-w-2xl mx-auto">
+                        Teknolojiye olan tutkum ve sürekli öğrenme isteğimle, modern web dünyasında iz bırakan projeler
+                        geliştiriyorum.
+                    </p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-10 items-center">
+                    <div class="space-y-6 text-lg text-muted font-body">
+                        <p>
+                            Merhaba! Ben Uğur. Web teknolojilerine ve modern arayüz tasarımlarına tutkulu bir
+                            geliştiriciyim. Kod yazmayı sadece bir iş değil, aynı zamanda bir sanat olarak görüyorum.
+                        </p>
+                        <p>
+                            Kullanıcı dostu, hızlı ve estetik web siteleri oluşturmak için en güncel teknolojileri
+                            kullanıyorum. Sürekli öğrenme ve kendimi geliştirme yolculuğundayım.
+                        </p>
+                    </div>
+                    <div
+                        class="bg-card p-6 rounded-2xl border border-white/10 hover:border-primary/50 transition-colors">
+                        <h3 class="text-xl font-bold mb-4 text-white">Neler Yapıyorum?</h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-center gap-3 text-muted">
+                                <span class="material-symbols-outlined text-primary">check_circle</span> Frontend
+                                Geliştirme
+                            </li>
+                            <li class="flex items-center gap-3 text-muted">
+                                <span class="material-symbols-outlined text-primary">check_circle</span> UI/UX Tasarım
+                            </li>
+                            <li class="flex items-center gap-3 text-muted">
+                                <span class="material-symbols-outlined text-primary">check_circle</span> Mobil Uygulama
+                                (React Native)
+                            </li>
+                            <li class="flex items-center gap-3 text-muted">
+                                <span class="material-symbols-outlined text-primary">check_circle</span> Backend
+                                Entegrasyonları
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- YENİ BÖLÜM: DENEYİMLERİM (Timeline Style) -->
+        <section id="experience"
+            class="min-h-screen flex flex-col justify-center px-8 md:px-20 py-20 border-t border-white/5 reveal-section">
+            <div class="max-w-4xl mx-auto w-full">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-4 relative inline-block">
+                        <span
+                            class="absolute -inset-4 bg-gradient-to-r from-red-600 via-orange-500 to-yellow-400 opacity-20 blur-xl rounded-full"></span>
+                        <span class="relative text-white uppercase tracking-wider">Deneyimlerim</span>
+                    </h2>
+                    <p class="text-muted max-w-2xl mx-auto">
+                        Profesyonel kariyerim boyunca edindiğim tecrübeler ve görev aldığım önemli roller.
+                    </p>
+                </div>
+                <div class="relative border-l border-white/10 ml-4 space-y-12">
+                    <!-- Deneyim 1 -->
+                    <div class="relative pl-8">
+                        <span
+                            class="absolute -left-[9px] top-2 w-4 h-4 rounded-full bg-primary border-4 border-black"></span>
+                        <span class="text-sm text-primary font-mono mb-2 block">2023 - Günümüz</span>
+                        <h3 class="text-2xl font-bold text-white">Senior Frontend Developer</h3>
+                        <h4 class="text-lg text-gray-400 mb-4">Tech Company Inc.</h4>
+                        <p class="text-muted leading-relaxed">
+                            Modern web teknolojileri kullanarak ölçeklenebilir frontend mimarileri geliştiriyorum. React
+                            ve TypeScript tabanlı projelerde takım liderliği yapıyorum.
+                        </p>
+                    </div>
+                    <!-- Deneyim 2 -->
+                    <div class="relative pl-8">
+                        <span
+                            class="absolute -left-[9px] top-2 w-4 h-4 rounded-full bg-gray-600 border-4 border-black group-hover:bg-primary transition-colors"></span>
+                        <span class="text-sm text-primary font-mono mb-2 block">2021 - 2023</span>
+                        <h3 class="text-2xl font-bold text-white">Full Stack Developer</h3>
+                        <h4 class="text-lg text-gray-400 mb-4">Digital Agency Ltd.</h4>
+                        <p class="text-muted leading-relaxed">
+                            Müşteri odaklı web projeleri ve e-ticaret siteleri geliştirdim. .NET Core ve Vue.js
+                            teknolojilerini aktif olarak kullandım.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- YENİ BÖLÜM: EĞİTİM BİLGİLERİM -->
+        <section id="education"
+            class="min-h-screen flex flex-col justify-center px-8 md:px-20 py-20 border-t border-white/5 reveal-section">
+            <div class="max-w-4xl mx-auto w-full">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-4 relative inline-block">
+                        <span
+                            class="absolute -inset-4 bg-gradient-to-r from-red-600 via-orange-500 to-yellow-400 opacity-20 blur-xl rounded-full"></span>
+                        <span class="relative text-white uppercase tracking-wider">Eğitim Bilgilerim</span>
+                    </h2>
+                    <p class="text-muted max-w-2xl mx-auto">
+                        Akademik geçmişim ve katıldığım yoğunlaştırılmış eğitim programları.
+                    </p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- Eğitim 1 -->
+                    <div
+                        class="bg-card p-8 rounded-2xl border border-white/10 hover:border-primary/50 transition-all group">
+                        <span
+                            class="material-symbols-outlined text-4xl text-primary mb-4 group-hover:scale-110 transition-transform">school</span>
+                        <span class="block text-sm text-gray-500 font-mono mb-2">2017 - 2021</span>
+                        <h3 class="text-xl font-bold text-white mb-1">Bilgisayar Mühendisliği</h3>
+                        <p class="text-gray-400">İstanbul Teknik Üniversitesi</p>
+                        <p class="text-muted mt-4 text-sm">
+                            3.50 not ortalaması ile onur derecesiyle mezun oldum. Yazılım mühendisliği ve algoritma
+                            analizi üzerine yoğunlaştım.
+                        </p>
+                    </div>
+                    <!-- Eğitim 2 -->
+                    <div
+                        class="bg-card p-8 rounded-2xl border border-white/10 hover:border-primary/50 transition-all group">
+                        <span
+                            class="material-symbols-outlined text-4xl text-primary mb-4 group-hover:scale-110 transition-transform">code</span>
+                        <span class="block text-sm text-gray-500 font-mono mb-2">2020 - 2021</span>
+                        <h3 class="text-xl font-bold text-white mb-1">Full Stack Web Bootcamp</h3>
+                        <p class="text-gray-400">Udemy / Coursera</p>
+                        <p class="text-muted mt-4 text-sm">
+                            Modern web geliştirme teknolojileri, React, Node.js ve veritabanı yönetimi üzerine
+                            yoğunlaştırılmış eğitim programı.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. BÖLÜM: YETENEKLER (Teknik Yeterlilik) -->
+        <section id="skills"
+            class="min-h-screen flex flex-col justify-center px-8 md:px-20 py-20 border-t border-white/5 reveal-section">
+            <div class="max-w-5xl mx-auto w-full text-center">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 relative inline-block">
+                    <span
+                        class="absolute -inset-4 bg-gradient-to-r from-red-600 via-orange-500 to-yellow-400 opacity-20 blur-xl rounded-full"></span>
+                    <span class="relative text-white uppercase tracking-wider">Teknik Yeterlilik</span>
+                </h2>
+                <p class="text-muted mb-16 max-w-2xl mx-auto">
+                    Modern arayüz geliştirmekten ölçeklenebilir .NET Core mimarilerine kadar uzmanlık alanlarımı
+                    özetleyen bir bölüm.
+                </p>
+
+                <div class="relative px-4 md:px-0">
+                    <!-- Sol Buton -->
+                    <button onclick="scrollSkills('left')"
+                        class="absolute left-0 top-1/2 -translate-y-1/2 -ml-5 md:-ml-16 z-20 bg-card hover:bg-primary text-white p-3 rounded-full border border-white/10 transition-all shadow-lg hover:shadow-primary/50 hover:scale-110 hidden md:flex items-center justify-center cursor-pointer">
+                        <span class="material-symbols-outlined text-2xl">chevron_left</span>
+                    </button>
+
+                    <!-- Grid Container (2 Satır, Yatay Scroll) -->
+                    <div class="grid grid-rows-2 grid-flow-col gap-4 overflow-x-auto snap-x snap-mandatory scrollbar-hide scroll-smooth py-4"
+                        id="skills-grid">
+
+                        <!-- Gradient Definition (Hidden) -->
+                        <svg width="0" height="0" class="absolute">
+                            <defs>
+                                <linearGradient id="skillGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" stop-color="#ffb700" />
+                                    <stop offset="50%" stop-color="#ff8800" />
+                                    <stop offset="100%" stop-color="#ff4d00" />
+                                </linearGradient>
+                            </defs>
+                        </svg>
+
+                        <!-- Skill 1: ASP.NET Core -->
+                        <div
+                            class="skill-card w-40 md:w-56 snap-start bg-card p-4 rounded-2xl border border-white/5 hover:border-primary/30 transition-all duration-300 group flex flex-col items-center hover:-translate-y-2">
+                            <div class="relative w-20 h-20 mb-3">
+                                <svg class="w-full h-full" viewBox="0 0 100 100">
+                                    <circle class="text-white/10 stroke-current" stroke-width="6" cx="50" cy="50" r="40"
+                                        fill="rgba(255,255,255,0.02)"></circle>
+                                    <circle class="progress-ring-circle" stroke="url(#skillGradient)" stroke-width="6"
+                                        stroke-linecap="round" cx="50" cy="50" r="40" fill="transparent"
+                                        stroke-dasharray="251.2" stroke-dashoffset="25.12"></circle> <!-- %90 -->
+                                </svg>
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <span
+                                        class="text-lg font-bold text-white group-hover:text-primary transition-colors">90%</span>
+                                </div>
+                            </div>
+                            <h3
+                                class="font-bold text-base text-white group-hover:text-primary transition-colors text-center">
+                                ASP.NET Core
+                            </h3>
+                        </div>
+                        <div
+                            class="skill-card w-40 md:w-56 snap-start bg-card p-4 rounded-2xl border border-white/5 hover:border-primary/30 transition-all duration-300 group flex flex-col items-center hover:-translate-y-2">
+                            <div class="relative w-20 h-20 mb-3">
+                                <svg class="w-full h-full" viewBox="0 0 100 100">
+                                    <circle class="text-white/10 stroke-current" stroke-width="6" cx="50" cy="50" r="40"
+                                        fill="rgba(255,255,255,0.02)"></circle>
+                                    <circle class="progress-ring-circle" stroke="url(#skillGradient)" stroke-width="6"
+                                        stroke-linecap="round" cx="50" cy="50" r="40" fill="transparent"
+                                        stroke-dasharray="251.2" stroke-dashoffset="25.12"></circle> <!-- %90 -->
+                                </svg>
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <span
+                                        class="text-lg font-bold text-white group-hover:text-primary transition-colors">90%</span>
+                                </div>
+                            </div>
+                            <h3
+                                class="font-bold text-base text-white group-hover:text-primary transition-colors text-center">
+                                ASP.NET Core
+                            </h3>
+                        </div>
+                        <!-- Skill 2: SQL -->
+                        <div
+                            class="skill-card w-40 md:w-56 snap-start bg-card p-4 rounded-2xl border border-white/5 hover:border-primary/30 transition-all duration-300 group flex flex-col items-center hover:-translate-y-2">
+                            <div class="relative w-20 h-20 mb-3">
+                                <svg class="w-full h-full" viewBox="0 0 100 100">
+                                    <circle class="text-white/10 stroke-current" stroke-width="6" cx="50" cy="50" r="40"
+                                        fill="rgba(255,255,255,0.02)"></circle>
+                                    <circle class="progress-ring-circle" stroke="url(#skillGradient)" stroke-width="6"
+                                        stroke-linecap="round" cx="50" cy="50" r="40" fill="transparent"
+                                        stroke-dasharray="251.2" stroke-dashoffset="75.36"></circle> <!-- %70 -->
+                                </svg>
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <span
+                                        class="text-lg font-bold text-white group-hover:text-primary transition-colors">70%</span>
+                                </div>
+                            </div>
+                            <h3
+                                class="font-bold text-base text-white group-hover:text-primary transition-colors text-center">
+                                SQL</h3>
+                        </div>
+
+                        <!-- Skill 3: React -->
+                        <div
+                            class="skill-card w-40 md:w-56 snap-start bg-card p-4 rounded-2xl border border-white/5 hover:border-primary/30 transition-all duration-300 group flex flex-col items-center hover:-translate-y-2">
+                            <div class="relative w-20 h-20 mb-3">
+                                <svg class="w-full h-full" viewBox="0 0 100 100">
+                                    <circle class="text-white/10 stroke-current" stroke-width="6" cx="50" cy="50" r="40"
+                                        fill="rgba(255,255,255,0.02)"></circle>
+                                    <circle class="progress-ring-circle" stroke="url(#skillGradient)" stroke-width="6"
+                                        stroke-linecap="round" cx="50" cy="50" r="40" fill="transparent"
+                                        stroke-dasharray="251.2" stroke-dashoffset="125.6"></circle> <!-- %50 -->
+                                </svg>
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <span
+                                        class="text-lg font-bold text-white group-hover:text-primary transition-colors">50%</span>
+                                </div>
+                            </div>
+                            <h3
+                                class="font-bold text-base text-white group-hover:text-primary transition-colors text-center">
+                                React</h3>
+                        </div>
+
+                        <!-- Skill 4: Angular -->
+                        <div
+                            class="skill-card w-40 md:w-56 snap-start bg-card p-4 rounded-2xl border border-white/5 hover:border-primary/30 transition-all duration-300 group flex flex-col items-center hover:-translate-y-2">
+                            <div class="relative w-20 h-20 mb-3">
+                                <svg class="w-full h-full" viewBox="0 0 100 100">
+                                    <circle class="text-white/10 stroke-current" stroke-width="6" cx="50" cy="50" r="40"
+                                        fill="rgba(255,255,255,0.02)"></circle>
+                                    <circle class="progress-ring-circle" stroke="url(#skillGradient)" stroke-width="6"
+                                        stroke-linecap="round" cx="50" cy="50" r="40" fill="transparent"
+                                        stroke-dasharray="251.2" stroke-dashoffset="42.7"></circle> <!-- %83 -->
+                                </svg>
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <span
+                                        class="text-lg font-bold text-white group-hover:text-primary transition-colors">83%</span>
+                                </div>
+                            </div>
+                            <h3
+                                class="font-bold text-base text-white group-hover:text-primary transition-colors text-center">
+                                Angular</h3>
+                        </div>
+
+                        <!-- Skill 5: Entity Framework -->
+                        <div
+                            class="skill-card w-40 md:w-56 snap-start bg-card p-4 rounded-2xl border border-white/5 hover:border-primary/30 transition-all duration-300 group flex flex-col items-center hover:-translate-y-2">
+                            <div class="relative w-20 h-20 mb-3">
+                                <svg class="w-full h-full" viewBox="0 0 100 100">
+                                    <circle class="text-white/10 stroke-current" stroke-width="6" cx="50" cy="50" r="40"
+                                        fill="rgba(255,255,255,0.02)"></circle>
+                                    <circle class="progress-ring-circle" stroke="url(#skillGradient)" stroke-width="6"
+                                        stroke-linecap="round" cx="50" cy="50" r="40" fill="transparent"
+                                        stroke-dasharray="251.2" stroke-dashoffset="37.68"></circle> <!-- %85 -->
+                                </svg>
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <span
+                                        class="text-lg font-bold text-white group-hover:text-primary transition-colors">85%</span>
+                                </div>
+                            </div>
+                            <h3
+                                class="font-bold text-base text-white group-hover:text-primary transition-colors text-center">
+                                Entity Framework</h3>
+                        </div>
+
+                        <!-- Skill 6: WEB API -->
+                        <div
+                            class="skill-card w-40 md:w-56 snap-start bg-card p-4 rounded-2xl border border-white/5 hover:border-primary/30 transition-all duration-300 group flex flex-col items-center hover:-translate-y-2">
+                            <div class="relative w-20 h-20 mb-3">
+                                <svg class="w-full h-full" viewBox="0 0 100 100">
+                                    <circle class="text-white/10 stroke-current" stroke-width="6" cx="50" cy="50" r="40"
+                                        fill="rgba(255,255,255,0.02)"></circle>
+                                    <circle class="progress-ring-circle" stroke="url(#skillGradient)" stroke-width="6"
+                                        stroke-linecap="round" cx="50" cy="50" r="40" fill="transparent"
+                                        stroke-dasharray="251.2" stroke-dashoffset="25.12"></circle> <!-- %90 -->
+                                </svg>
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <span
+                                        class="text-lg font-bold text-white group-hover:text-primary transition-colors">90%</span>
+                                </div>
+                            </div>
+                            <h3
+                                class="font-bold text-base text-white group-hover:text-primary transition-colors text-center">
+                                WEB API</h3>
+                        </div>
+
+                        <!-- Skill 7: AWS -->
+                        <div
+                            class="skill-card w-40 md:w-56 snap-start bg-card p-4 rounded-2xl border border-white/5 hover:border-primary/30 transition-all duration-300 group flex flex-col items-center hover:-translate-y-2">
+                            <div class="relative w-20 h-20 mb-3">
+                                <svg class="w-full h-full" viewBox="0 0 100 100">
+                                    <circle class="text-white/10 stroke-current" stroke-width="6" cx="50" cy="50" r="40"
+                                        fill="rgba(255,255,255,0.02)"></circle>
+                                    <circle class="progress-ring-circle" stroke="url(#skillGradient)" stroke-width="6"
+                                        stroke-linecap="round" cx="50" cy="50" r="40" fill="transparent"
+                                        stroke-dasharray="251.2" stroke-dashoffset="62.8"></circle> <!-- %75 -->
+                                </svg>
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <span
+                                        class="text-lg font-bold text-white group-hover:text-primary transition-colors">75%</span>
+                                </div>
+                            </div>
+                            <h3
+                                class="font-bold text-base text-white group-hover:text-primary transition-colors text-center">
+                                AWS</h3>
+                        </div>
+
+                        <!-- Skill 8: Azure -->
+                        <div
+                            class="skill-card w-40 md:w-56 snap-start bg-card p-4 rounded-2xl border border-white/5 hover:border-primary/30 transition-all duration-300 group flex flex-col items-center hover:-translate-y-2">
+                            <div class="relative w-20 h-20 mb-3">
+                                <svg class="w-full h-full" viewBox="0 0 100 100">
+                                    <circle class="text-white/10 stroke-current" stroke-width="6" cx="50" cy="50" r="40"
+                                        fill="rgba(255,255,255,0.02)"></circle>
+                                    <circle class="progress-ring-circle" stroke="url(#skillGradient)" stroke-width="6"
+                                        stroke-linecap="round" cx="50" cy="50" r="40" fill="transparent"
+                                        stroke-dasharray="251.2" stroke-dashoffset="128.1"></circle> <!-- %49 -->
+                                </svg>
+                                <div class="absolute inset-0 flex items-center justify-center">
+                                    <span
+                                        class="text-lg font-bold text-white group-hover:text-primary transition-colors">49%</span>
+                                </div>
+                            </div>
+                            <h3
+                                class="font-bold text-base text-white group-hover:text-primary transition-colors text-center">
+                                Azure</h3>
+                        </div>
+
+                    </div>
+
+                    <!-- Sağ Buton -->
+                    <button onclick="scrollSkills('right')"
+                        class="absolute right-0 top-1/2 -translate-y-1/2 -mr-5 md:-mr-16 z-20 bg-card hover:bg-primary text-white p-3 rounded-full border border-white/10 transition-all shadow-lg hover:shadow-primary/50 hover:scale-110 hidden md:flex items-center justify-center cursor-pointer">
+                        <span class="material-symbols-outlined text-2xl">chevron_right</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- YENİ BÖLÜM: SERTİFİKALARIM -->
+        <section id="certificates"
+            class="min-h-screen flex flex-col justify-center px-8 md:px-20 py-20 border-t border-white/5 reveal-section">
+            <div class="max-w-4xl mx-auto w-full">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-4 relative inline-block">
+                        <span
+                            class="absolute -inset-4 bg-gradient-to-r from-red-600 via-orange-500 to-yellow-400 opacity-20 blur-xl rounded-full"></span>
+                        <span class="relative text-white uppercase tracking-wider">Sertifikalarım</span>
+                    </h2>
+                    <p class="text-muted max-w-2xl mx-auto">
+                        Uzmanlığımı belgeleyen uluslararası sertifikalar ve başarılar.
+                    </p>
+                </div>
+                <div class="relative">
+                    <!-- Sol Buton -->
+                    <button id="prevCert"
+                        class="absolute left-0 top-1/2 -translate-y-1/2 -ml-5 md:-ml-20 z-10 bg-black/50 hover:bg-primary p-3 rounded-full backdrop-blur-sm border border-white/10 transition-all disabled:opacity-0 cursor-pointer hidden md:block">
+                        <span class="material-symbols-outlined text-white">chevron_left</span>
+                    </button>
+
+                    <div class="flex overflow-x-auto gap-6 pb-8 snap-x snap-mandatory scrollbar-hide scroll-smooth"
+                        id="certificates-grid">
+                        <!-- Sertifika 1 -->
+                        <div
+                            class="flex-none w-full md:w-[calc(50%-12px)] snap-start bg-card p-6 rounded-xl border border-white/10 hover:border-primary/50 transition-all text-center group cursor-pointer hover:-translate-y-2">
+                            <div
+                                class="w-16 h-16 mx-auto bg-white/5 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                                <span class="material-symbols-outlined text-3xl text-primary">verified</span>
+                            </div>
+                            <h3 class="font-bold text-white mb-2">AWS Certified Solutions Architect</h3>
+                            <p class="text-xs text-muted">Amazon Web Services</p>
+                            <p class="text-xs text-gray-500 mt-2">Ocak 2023</p>
+                        </div>
+                        <!-- Sertifika 2 -->
+                        <div
+                            class="flex-none w-full md:w-[calc(50%-12px)] snap-start bg-card p-6 rounded-xl border border-white/10 hover:border-primary/50 transition-all text-center group cursor-pointer hover:-translate-y-2">
+                            <div
+                                class="w-16 h-16 mx-auto bg-white/5 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                                <span class="material-symbols-outlined text-3xl text-primary">workspace_premium</span>
+                            </div>
+                            <h3 class="font-bold text-white mb-2">Meta Frontend Developer</h3>
+                            <p class="text-xs text-muted">Meta (Coursera)</p>
+                            <p class="text-xs text-gray-500 mt-2">Haziran 2022</p>
+                        </div>
+                        <!-- Sertifika 3 -->
+                        <div
+                            class="flex-none w-full md:w-[calc(50%-12px)] snap-start bg-card p-6 rounded-xl border border-white/10 hover:border-primary/50 transition-all text-center group cursor-pointer hover:-translate-y-2">
+                            <div
+                                class="w-16 h-16 mx-auto bg-white/5 rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
+                                <span class="material-symbols-outlined text-3xl text-primary">approval</span>
+                            </div>
+                            <h3 class="font-bold text-white mb-2">Google UX Design</h3>
+                            <p class="text-xs text-muted">Google</p>
+                            <p class="text-xs text-gray-500 mt-2">Mart 2022</p>
+                        </div>
+                    </div>
+
+                    <!-- Sağ Buton -->
+                    <button id="nextCert"
+                        class="absolute right-0 top-1/2 -translate-y-1/2 -mr-5 md:-mr-20 z-10 bg-black/50 hover:bg-primary p-3 rounded-full backdrop-blur-sm border border-white/10 transition-all disabled:opacity-0 cursor-pointer hidden md:block">
+                        <span class="material-symbols-outlined text-white">chevron_right</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. BÖLÜM: PROJELER -->
+        <section id="projects"
+            class="min-h-screen flex flex-col justify-center px-8 md:px-20 py-20 border-t border-white/5 reveal-section">
+            <div class="max-w-5xl mx-auto w-full">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-4 relative inline-block">
+                        <span
+                            class="absolute -inset-4 bg-gradient-to-r from-red-600 via-orange-500 to-yellow-400 opacity-20 blur-xl rounded-full"></span>
+                        <span class="relative text-white uppercase tracking-wider">Seçili Projeler</span>
+                    </h2>
+                    <p class="text-muted max-w-2xl mx-auto">
+                        Gerçek dünya problemlerine çözüm üreten, modern teknolojilerle geliştirdiğim bazı çalışmalarım.
+                    </p>
+                </div>
+                <!-- Filtre Butonları -->
+                <div class="flex flex-wrap justify-center gap-4 mb-12" id="project-filters">
+                    <button data-filter="all"
+                        class="px-6 py-2 rounded-full border border-primary bg-primary/10 text-primary font-bold hover:bg-primary hover:text-white transition-all duration-300 active-filter">
+                        Tümü
+                    </button>
+                    <button data-filter="web"
+                        class="px-6 py-2 rounded-full border border-white/10 bg-white/5 text-gray-400 hover:border-primary/50 hover:text-primary transition-all duration-300">
+                        Web
+                    </button>
+                    <button data-filter="mobil"
+                        class="px-6 py-2 rounded-full border border-white/10 bg-white/5 text-gray-400 hover:border-primary/50 hover:text-primary transition-all duration-300">
+                        Mobil
+                    </button>
+                    <button data-filter="oyun"
+                        class="px-6 py-2 rounded-full border border-white/10 bg-white/5 text-gray-400 hover:border-primary/50 hover:text-primary transition-all duration-300">
+                        Oyun
+                    </button>
+                </div>
+
+                <div class="relative">
+                    <!-- Sol Buton -->
+                    <button id="prevProject"
+                        class="absolute left-0 top-1/2 -translate-y-1/2 -ml-5 md:-ml-20 z-10 bg-black/50 hover:bg-primary p-3 rounded-full backdrop-blur-sm border border-white/10 transition-all disabled:opacity-0 cursor-pointer hidden md:block">
+                        <span class="material-symbols-outlined text-white">chevron_left</span>
+                    </button>
+
+                    <div class="flex overflow-x-auto gap-6 pb-8 snap-x snap-mandatory scrollbar-hide scroll-smooth"
+                        id="projects-grid">
+                        <!-- Proje 1 (Web) -->
+                        <article data-category="web"
+                            class="project-card flex-none w-full md:w-[calc(50%-12px)] snap-start bg-card rounded-2xl overflow-hidden border border-white/10 group hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500">
+                            <div class="h-40 bg-gray-800 relative overflow-hidden">
+                                <!-- Proje Görseli Yer Tutucu -->
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-tr from-primary/20 to-purple-500/20 group-hover:scale-110 transition-transform duration-700">
+                                </div>
+                                <div
+                                    class="absolute inset-0 flex items-center justify-center text-3xl font-bold text-white/10">
+                                    PROJE 01</div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold mb-2 group-hover:text-primary transition-colors">E-Ticaret
+                                    Platformu</h3>
+                                <p class="text-muted mb-4 text-sm line-clamp-2">React ve Node.js kullanılarak
+                                    geliştirilmiş,
+                                    tam kapsamlı
+                                    bir alışveriş deneyimi sunan web uygulaması.</p>
+                                <div class="flex gap-2 mb-6">
+                                    <span
+                                        class="text-[10px] font-mono bg-white/5 px-2 py-1 rounded text-primary">React</span>
+                                    <span
+                                        class="text-[10px] font-mono bg-white/5 px-2 py-1 rounded text-primary">Node.js</span>
+                                    <span
+                                        class="text-[10px] font-mono bg-white/5 px-2 py-1 rounded text-primary">MongoDB</span>
+                                </div>
+                                <a href="#"
+                                    class="inline-flex items-center gap-2 text-white hover:text-primary transition-colors text-sm">
+                                    İncele <span class="material-symbols-outlined text-sm">arrow_outward</span>
+                                </a>
+                            </div>
+                        </article>
+
+                        <!-- Proje 2 (Web) -->
+                        <article data-category="web"
+                            class="project-card flex-none w-full md:w-[calc(50%-12px)] snap-start bg-card rounded-2xl overflow-hidden border border-white/10 group hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500">
+                            <div class="h-40 bg-gray-800 relative overflow-hidden">
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-tr from-blue-500/20 to-green-500/20 group-hover:scale-110 transition-transform duration-700">
+                                </div>
+                                <div
+                                    class="absolute inset-0 flex items-center justify-center text-3xl font-bold text-white/10">
+                                    PROJE 02</div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold mb-2 group-hover:text-primary transition-colors">Task
+                                    Yönetim
+                                    Paneli</h3>
+                                <p class="text-muted mb-4 text-sm line-clamp-2">Takımların verimliliğini artırmak için
+                                    tasarlanmış,
+                                    sürükle-bırak özellikli görev yönetim aracı.</p>
+                                <div class="flex gap-2 mb-6">
+                                    <span
+                                        class="text-[10px] font-mono bg-white/5 px-2 py-1 rounded text-primary">Vue.js</span>
+                                    <span
+                                        class="text-[10px] font-mono bg-white/5 px-2 py-1 rounded text-primary">Firebase</span>
+                                    <span
+                                        class="text-[10px] font-mono bg-white/5 px-2 py-1 rounded text-primary">Tailwind</span>
+                                </div>
+                                <a href="#"
+                                    class="inline-flex items-center gap-2 text-white hover:text-primary transition-colors text-sm">
+                                    İncele <span class="material-symbols-outlined text-sm">arrow_outward</span>
+                                </a>
+                            </div>
+                        </article>
+
+                        <!-- Proje 3 (Mobil) -->
+                        <article data-category="mobil"
+                            class="project-card flex-none w-full md:w-[calc(50%-12px)] snap-start bg-card rounded-2xl overflow-hidden border border-white/10 group hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500">
+                            <div class="h-40 bg-gray-800 relative overflow-hidden">
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-tr from-cyan-500/20 to-blue-600/20 group-hover:scale-110 transition-transform duration-700">
+                                </div>
+                                <div
+                                    class="absolute inset-0 flex items-center justify-center text-3xl font-bold text-white/10">
+                                    PROJE 03</div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold mb-2 group-hover:text-primary transition-colors">Fitness
+                                    App
+                                </h3>
+                                <p class="text-muted mb-4 text-sm line-clamp-2">Kullanıcıların egzersiz ve beslenme
+                                    takiplerini
+                                    yapabileceği, React Native ile geliştirilmiş mobil uygulama.</p>
+                                <div class="flex gap-2 mb-6">
+                                    <span class="text-[10px] font-mono bg-white/5 px-2 py-1 rounded text-primary">React
+                                        Native</span>
+                                    <span
+                                        class="text-[10px] font-mono bg-white/5 px-2 py-1 rounded text-primary">Redux</span>
+                                </div>
+                                <a href="#"
+                                    class="inline-flex items-center gap-2 text-white hover:text-primary transition-colors text-sm">
+                                    İncele <span class="material-symbols-outlined text-sm">arrow_outward</span>
+                                </a>
+                            </div>
+                        </article>
+
+                        <!-- Proje 4 (Oyun) -->
+                        <article data-category="oyun"
+                            class="project-card flex-none w-full md:w-[calc(50%-12px)] snap-start bg-card rounded-2xl overflow-hidden border border-white/10 group hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500">
+                            <div class="h-40 bg-gray-800 relative overflow-hidden">
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-tr from-red-500/20 to-yellow-500/20 group-hover:scale-110 transition-transform duration-700">
+                                </div>
+                                <div
+                                    class="absolute inset-0 flex items-center justify-center text-3xl font-bold text-white/10">
+                                    PROJE 04</div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold mb-2 group-hover:text-primary transition-colors">2D
+                                    Platformer
+                                </h3>
+                                <p class="text-muted mb-4 text-sm line-clamp-2">Unity oyun motoru kullanılarak
+                                    geliştirilmiş, 20'den
+                                    fazla bölüm içeren macera oyunu.</p>
+                                <div class="flex gap-2 mb-6">
+                                    <span
+                                        class="text-[10px] font-mono bg-white/5 px-2 py-1 rounded text-primary">Unity</span>
+                                    <span
+                                        class="text-[10px] font-mono bg-white/5 px-2 py-1 rounded text-primary">C#</span>
+                                </div>
+                                <a href="#"
+                                    class="inline-flex items-center gap-2 text-white hover:text-primary transition-colors text-sm">
+                                    İncele <span class="material-symbols-outlined text-sm">arrow_outward</span>
+                                </a>
+                            </div>
+                        </article>
+                    </div>
+
+                    <!-- Sağ Buton -->
+                    <button id="nextProject"
+                        class="absolute right-0 top-1/2 -translate-y-1/2 -mr-5 md:-mr-20 z-10 bg-black/50 hover:bg-primary p-3 rounded-full backdrop-blur-sm border border-white/10 transition-all disabled:opacity-0 cursor-pointer hidden md:block">
+                        <span class="material-symbols-outlined text-white">chevron_right</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. BÖLÜM: İLETİŞİM -->
+        <section id="contact"
+            class="min-h-screen flex flex-col justify-center items-center px-6 border-t border-white/5 reveal-section">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 relative inline-block">
+                    <span
+                        class="absolute -inset-4 bg-gradient-to-r from-red-600 via-orange-500 to-yellow-400 opacity-20 blur-xl rounded-full"></span>
+                    <span class="relative text-white uppercase tracking-wider">İletişim</span>
+                </h2>
+                <p class="text-muted max-w-2xl mx-auto">
+                    Yeni bir proje fikriniz mi var veya sadece merhaba demek mi istiyorsunuz? E-postalarım her zaman
+                    açık!
+                </p>
+            </div>
+            <a href="mailto:ugur@example.com"
+                class="text-3xl md:text-5xl font-bold hover:text-primary transition-colors border-b-2 border-transparent hover:border-primary pb-2">
+                ugur@example.com
+            </a>
+
+            <div class="flex gap-8 mt-16">
+                <a href="#" class="group opacity-80 hover:opacity-100 transition-all duration-300 
+          flex flex-col items-center gap-2 text-white hover:-translate-y-1">
+
+                    <span class="p-3 bg-white/20 rounded-full transition-colors 
+                 group-hover:bg-primary/40">
+                        <!-- LinkedIn SVG Icon -->
+                        <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 
+                     2.239 5 5 5h14c2.762 0 5-2.239 
+                     5-5v-14c0-2.761-2.238-5-5-5zm-11 
+                     19h-3v-11h3v11zm-1.5-12.268c-.966 
+                     0-1.75-.79-1.75-1.764s.784-1.764 
+                     1.75-1.764 1.75.79 1.75 
+                     1.764-.783 1.764-1.75 
+                     1.764zm13.5 12.268h-3v-5.604c0-3.368 
+                     -4-3.113-4 0v5.604h-3v-11h3v1.765c1.396 
+                     -2.586 7-2.777 7 2.476v6.759z" />
+                        </svg>
+                    </span>
+
+                    <span class="text-sm">LinkedIn</span>
+                </a>
+
+                <a href="#" class="group opacity-80 hover:opacity-100 transition-all duration-300 
+          flex flex-col items-center gap-2 text-white hover:-translate-y-1">
+
+                    <span class="p-3 bg-white/20 rounded-full transition-colors 
+                 group-hover:bg-primary/40">
+                        <!-- GitHub SVG Icon -->
+                        <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                            <path d="M12 .297c-6.63 0-12 5.373-12 
+                     12 0 5.303 3.438 9.8 8.205 
+                     11.385.6.113.82-.258.82-.577 
+                     0-.285-.01-1.04-.015-2.04-3.338 
+                     .724-4.042-1.61-4.042-1.61-.546 
+                     -1.387-1.333-1.757-1.333-1.757 
+                     -1.089-.745.084-.729.084-.729 
+                     1.205.084 1.84 1.236 1.84 1.236 
+                     1.07 1.835 2.809 1.305 3.495.998 
+                     .108-.776.417-1.305.76-1.605 
+                     -2.665-.3-5.466-1.332-5.466-5.93 
+                     0-1.31.468-2.38 1.236-3.22 
+                     -.123-.303-.536-1.523.117-3.176 
+                     0 0 1.008-.322 3.3 1.23.957-.266 
+                     1.983-.399 3.003-.404 1.02.005 
+                     2.047.138 3.006.404 2.29-1.552 
+                     3.296-1.23 3.296-1.23.655 
+                     1.653.242 2.873.12 3.176.77.84 
+                     1.235 1.91 1.235 3.22 0 4.61 
+                     -2.804 5.625-5.475 5.92.43.372 
+                     .823 1.102.823 2.222 0 1.606 
+                     -.015 2.896-.015 3.286 0 .32.216 
+                     .694.825.576C20.565 22.092 24 
+                     17.592 24 12.297c0-6.627-5.373-12-12-12z" />
+                        </svg>
+                    </span>
+
+                    <span class="text-sm">GitHub</span>
+                </a>
+
+                <a href="#" class="group opacity-80 hover:opacity-100 transition-all duration-300 
+          flex flex-col items-center gap-2 text-white hover:-translate-y-1">
+
+                    <span class="p-3 bg-white/20 rounded-full transition-colors 
+                 group-hover:bg-primary/40">
+                        <!-- Instagram SVG Icon -->
+                        <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                            <path d="M7 2C4.243 2 2 4.243 2 
+                     7v10c0 2.757 2.243 5 5 
+                     5h10c2.757 0 5-2.243 
+                     5-5V7c0-2.757-2.243-5-5-5H7zm10 
+                     2a3 3 0 0 1 3 3v10a3 3 0 0 1-3 
+                     3H7a3 3 0 0 1-3-3V7a3 3 0 0 1 
+                     3-3h10zm-5 3a5 5 0 1 0 
+                     0 10 5 5 0 0 0 0-10zm0 
+                     2a3 3 0 1 1 0 6 3 3 0 
+                     0 1 0-6zm4.5-.9a1.1 
+                     1.1 0 1 0 0 2.2 1.1 
+                     1.1 0 0 0 0-2.2z" />
+                        </svg>
+                    </span>
+
+                    <span class="text-sm">Instagram</span>
+                </a>
+
+            </div>
+
+            <footer class="mt-20 text-muted text-sm">
+                © 2025 Uğur Nalbant | Tüm hakları saklıdır.
+            </footer>
+        </section>
+
+    </main>
+
+    <!-- ===== JAVASCRIPT KODLARI ===== -->
+    <script>
+        // 1. SIDEBAR TOGGLE İŞLEVİ (SADECE MOBİL İÇİN)
+        const sidebar = document.getElementById('sidebar');
+        const toggleBtn = document.getElementById('toggleSidebar');
+        const toggleIcon = document.getElementById('toggleIcon');
+        // mainContent referansını tutuyoruz ama masaüstünde artık JS ile müdahale etmeyeceğiz (CSS hallediyor)
+
+        // Sidebar'ı Aç (Mobil)
+        function openSidebar() {
+            sidebar.classList.remove('-translate-x-full');
+            toggleIcon.innerText = 'close';
+        }
+
+        // Sidebar'ı Kapat (Mobil)
+        function closeSidebar() {
+            sidebar.classList.add('-translate-x-full');
+            toggleIcon.innerText = 'menu';
+        }
+
+        // Toggle Butonuna Tıklama
+        toggleBtn.addEventListener('click', () => {
+            const isOpen = !sidebar.classList.contains('-translate-x-full');
+            if (isOpen) {
+                closeSidebar();
+            } else {
+                openSidebar();
+            }
+        });
+
+        // Linklere tıklandığında (Sadece mobilde kapat)
+        // Masaüstünde sidebar sabit olduğu için kapanmamalı
+        document.querySelectorAll('aside nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth < 768) {
+                    closeSidebar();
+                }
+            });
+        });
+
+        // Resize olayında mobil menü durumunu sıfırla
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 768) {
+                // Masaüstüne geçince sidebar'ı görünür kıl (CSS zaten yapıyor ama JS class çakışmasını önle)
+                sidebar.classList.remove('-translate-x-full');
+            } else {
+                // Mobile geçince varsayılan kapalı olsun
+                sidebar.classList.add('-translate-x-full');
+                toggleIcon.innerText = 'menu';
+            }
+        });
+
+        // 2. SCROLL REVEAL İŞLEVİ (BÖLÜMLERİN YUKARIDAN AŞAĞI BELİRMESİ)
+        // Intersection Observer API kullanarak elementlerin ekrana girmesini izliyoruz
+        const observerOptions = {
+            root: null,          // Viewport'u baz al
+            rootMargin: '0px',   // Kenar boşluğu yok
+            threshold: 0.15      // Elementin %15'i göründüğünde tetikle
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                // Eğer element ekranda görünüyorsa
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active'); // 'active' sınıfını ekle (Animasyonu başlat)
+                }
+            });
+        }, observerOptions);
+
+        // '.reveal-section' sınıfına sahip tüm elementleri seç ve izlemeye başla
+        document.querySelectorAll('.reveal-section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // NOT: Spotlight animasyonları artık CSS (@keyframes) üzerinden yönetiliyor.
+        // JS ile dinamik oluşturma iptal edildi, daha doğal bir görünüm için.
+
+        // 3. HERO BUTON CLICK EVENT (DEVAM ET)
+        const heroBtn = document.getElementById('hero-cta');
+        if (heroBtn) {
+            heroBtn.addEventListener('click', (e) => {
+                e.preventDefault(); // Varsayılan atlamayı engelle
+                const targetSection = document.getElementById('about');
+                if (targetSection) {
+                    targetSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        }
+
+        // 4. PROJE FİLTRELEME İŞLEVİ
+        const filterBtns = document.querySelectorAll('#project-filters button');
+        const projects = document.querySelectorAll('.project-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Aktif buton stilini güncelle
+                filterBtns.forEach(b => {
+                    b.classList.remove('bg-primary/10', 'text-primary', 'border-primary', 'active-filter');
+                    b.classList.add('bg-white/5', 'text-gray-400', 'border-white/10');
+                });
+
+                // Seçili butona aktif stil ekle
+                btn.classList.remove('bg-white/5', 'text-gray-400', 'border-white/10');
+                btn.classList.add('bg-primary/10', 'text-primary', 'border-primary', 'active-filter');
+
+                const filterValue = btn.getAttribute('data-filter');
+
+                // Projeleri filtrele
+                projects.forEach(project => {
+                    if (filterValue === 'all' || project.getAttribute('data-category') === filterValue) {
+                        project.classList.remove('hidden');
+                        // Animasyonlu giriş için ufak bir gecikme efekti
+                        project.style.opacity = '0';
+                        setTimeout(() => {
+                            project.style.opacity = '1';
+                        }, 50);
+                    } else {
+                        project.classList.add('hidden');
+                    }
+                });
+            });
+        });
+
+        // 5. PROJE SLİDER BUTONLARI
+        const projectsGrid = document.getElementById('projects-grid');
+        const prevBtn = document.getElementById('prevProject');
+        const nextBtn = document.getElementById('nextProject');
+
+        if (projectsGrid && prevBtn && nextBtn) {
+            prevBtn.addEventListener('click', () => {
+                const itemWidth = projectsGrid.querySelector('article').offsetWidth;
+                const gap = 24; // gap-6
+                projectsGrid.scrollBy({
+                    left: -(itemWidth + gap),
+                    behavior: 'smooth'
+                });
+            });
+
+            nextBtn.addEventListener('click', () => {
+                const itemWidth = projectsGrid.querySelector('article').offsetWidth;
+                const gap = 24; // gap-6
+                projectsGrid.scrollBy({
+                    left: (itemWidth + gap),
+                    behavior: 'smooth'
+                });
+            });
+        }
+
+        // 6. SERTİFİKA SLİDER BUTONLARI
+        const certsGrid = document.getElementById('certificates-grid');
+        const prevCertBtn = document.getElementById('prevCert');
+        const nextCertBtn = document.getElementById('nextCert');
+
+        if (certsGrid && prevCertBtn && nextCertBtn) {
+            prevCertBtn.addEventListener('click', () => {
+                // Sertifika kartı div olduğu için div seçiyoruz
+                const itemWidth = certsGrid.querySelector('div').offsetWidth;
+                const gap = 24; // gap-6
+                certsGrid.scrollBy({
+                    left: -(itemWidth + gap),
+                    behavior: 'smooth'
+                });
+            });
+
+            nextCertBtn.addEventListener('click', () => {
+                const itemWidth = certsGrid.querySelector('div').offsetWidth;
+                const gap = 24; // gap-6
+                certsGrid.scrollBy({
+                    left: (itemWidth + gap),
+                    behavior: 'smooth'
+                });
+            });
+        }
+
+        // 7. YETENEKLER SLİDER BUTONLARI
+        function scrollSkills(direction) {
+            const skillsGrid = document.getElementById('skills-grid');
+            if (!skillsGrid) return;
+
+            // Kart genişliği + gap
+            const itemWidth = skillsGrid.querySelector('.skill-card').offsetWidth;
+            const gap = 16; // gap-4
+
+            if (direction === 'left') {
+                skillsGrid.scrollBy({
+                    left: -(itemWidth + gap),
+                    behavior: 'smooth'
+                });
+            } else {
+                skillsGrid.scrollBy({
+                    left: (itemWidth + gap),
+                    behavior: 'smooth'
+                });
+            }
+        }
+    </script>
+</body>
+
+</html>
