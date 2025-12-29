@@ -1,4 +1,6 @@
-﻿
+﻿@using PortfolyoSitem.Data
+@model List<ExperiencesTable>
+
 <section id="experience"
          class="min-h-screen flex flex-col justify-center px-8 md:px-20 py-20 border-t border-white/5 reveal-section">
     <div class="max-w-4xl mx-auto w-full">
@@ -8,32 +10,25 @@
                 <span class="relative text-white uppercase tracking-wider">Deneyimlerim</span>
             </h2>
             <p class="text-muted max-w-2xl mx-auto">
-                Profesyonel kariyerim boyunca edindiğim tecrübeler ve görev aldığım önemli roller.
+                Profosyonel Karıyerim boyunca edindiğim tecrübeler ve görev aldığım roller
             </p>
         </div>
-        <div class="relative border-l border-white/10 ml-4 space-y-12">
-            <!-- Deneyim 1 -->
-            <div class="relative pl-8">
-                <span class="absolute -left-[9px] top-2 w-4 h-4 rounded-full bg-primary border-4 border-black"></span>
-                <span class="text-sm text-primary font-mono mb-2 block">2023 - Günümüz</span>
-                <h3 class="text-2xl font-bold text-white">Senior Frontend Developer</h3>
-                <h4 class="text-lg text-gray-400 mb-4">Tech Company Inc.</h4>
-                <p class="text-muted leading-relaxed">
-                    Modern web teknolojileri kullanarak ölçeklenebilir frontend mimarileri geliştiriyorum. React
-                    ve TypeScript tabanlı projelerde takım liderliği yapıyorum.
-                </p>
+        @foreach(var item in Model)
+        {
+            <div class="relative border-l border-white/10 ml-4 space-y-12">
+                <div class="relative pl-8">
+                    <span class="absolute -left-[9px] top-2 w-4 h-4 rounded-full bg-primary border-4 border-black"></span>
+                    <span class="text-sm text-primary font-mono mb-2 block">@item.Year</span>
+                    <h3 class="text-2xl font-bold text-white">@item.Title</h3>
+                    <h4 class="text-lg text-gray-400 mb-4">@item.CompanyName</h4>
+                    <p class="text-muted leading-relaxed">
+                        @item.Description
+                    </p>
+                </div>
+
             </div>
-            <!-- Deneyim 2 -->
-            <div class="relative pl-8">
-                <span class="absolute -left-[9px] top-2 w-4 h-4 rounded-full bg-gray-600 border-4 border-black group-hover:bg-primary transition-colors"></span>
-                <span class="text-sm text-primary font-mono mb-2 block">2021 - 2023</span>
-                <h3 class="text-2xl font-bold text-white">Full Stack Developer</h3>
-                <h4 class="text-lg text-gray-400 mb-4">Digital Agency Ltd.</h4>
-                <p class="text-muted leading-relaxed">
-                    Müşteri odaklı web projeleri ve e-ticaret siteleri geliştirdim. .NET Core ve Vue.js
-                    teknolojilerini aktif olarak kullandım.
-                </p>
-            </div>
-        </div>
+        }
+
+       
     </div>
 </section>

@@ -1,4 +1,7 @@
-﻿<section id="about"
+﻿@using PortfolyoSitem.Data
+@model AboutTable
+
+<section id="about"
          class="min-h-screen flex flex-col justify-center px-8 md:px-20 py-20 border-t border-white/5 reveal-section">
     <div class="max-w-4xl mx-auto w-full">
         <div class="text-center mb-16">
@@ -7,19 +10,14 @@
                 <span class="relative text-white uppercase tracking-wider">Hakkımda</span>
             </h2>
             <p class="text-muted max-w-2xl mx-auto">
-                Teknolojiye olan tutkum ve sürekli öğrenme isteğimle, modern web dünyasında iz bırakan projeler
-                geliştiriyorum.
+                @Model.Title
             </p>
         </div>
         <div class="grid md:grid-cols-2 gap-10 items-center">
             <div class="space-y-6 text-lg text-muted font-body">
                 <p>
-                    Merhaba! Ben Uğur. Web teknolojilerine ve modern arayüz tasarımlarına tutkulu bir
-                    geliştiriciyim. Kod yazmayı sadece bir iş değil, aynı zamanda bir sanat olarak görüyorum.
-                </p>
-                <p>
-                    Kullanıcı dostu, hızlı ve estetik web siteleri oluşturmak için en güncel teknolojileri
-                    kullanıyorum. Sürekli öğrenme ve kendimi geliştirme yolculuğundayım.
+                    
+                       @Model.Description
                 </p>
             </div>
             <div class="bg-card p-6 rounded-2xl border border-white/10 hover:border-primary/50 transition-colors">
@@ -45,7 +43,3 @@
         </div>
     </div>
 </section>
-
-@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@

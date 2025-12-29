@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using PortfolyoSitem.Data;
+
 namespace PortfolyoSitem
 {
     public class Program
@@ -8,6 +11,9 @@ namespace PortfolyoSitem
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddDbContext<PortfolyoSitemDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             var app = builder.Build();
 

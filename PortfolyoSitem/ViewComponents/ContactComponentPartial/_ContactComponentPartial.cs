@@ -1,10 +1,19 @@
-﻿namespace PortfolyoSitem.ViewComponents.ContactComponentPartial
+﻿using PortfolyoSitem.Data;
+
+namespace PortfolyoSitem.ViewComponents.ContactComponentPartial
 {
     public class _ContactComponentPartial : Microsoft.AspNetCore.Mvc.ViewComponent
     {
+        private readonly PortfolyoSitemDbContext _context;
+
+        public _ContactComponentPartial(PortfolyoSitemDbContext context)
+        {
+            _context = context;
+        }
         public Microsoft.AspNetCore.Mvc.IViewComponentResult Invoke()
         {
-            return View();
+            var values = _context.ContactTables.FirstOrDefault();
+            return View(values);
         }
     }
 }

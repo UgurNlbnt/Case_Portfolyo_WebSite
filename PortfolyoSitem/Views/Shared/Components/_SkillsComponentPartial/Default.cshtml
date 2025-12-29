@@ -1,4 +1,7 @@
-﻿<section id="skills"
+﻿@using PortfolyoSitem.Data
+
+@model List<SkillsTable>
+<section id="skills"
          class="min-h-screen flex flex-col justify-center px-8 md:px-20 py-20 border-t border-white/5 reveal-section">
     <div class="max-w-5xl mx-auto w-full text-center">
         <h2 class="text-4xl md:text-5xl font-bold mb-4 relative inline-block">
@@ -31,175 +34,26 @@
                         </linearGradient>
                     </defs>
                 </svg>
-
-                <!-- Skill 1: ASP.NET Core -->
-                <div class="skill-card w-40 md:w-56 snap-start bg-card p-4 rounded-2xl border border-white/5 hover:border-primary/30 transition-all duration-300 group flex flex-col items-center hover:-translate-y-2">
-                    <div class="relative w-20 h-20 mb-3">
-                        <svg class="w-full h-full" viewBox="0 0 100 100">
-                            <circle class="text-white/10 stroke-current" stroke-width="6" cx="50" cy="50" r="40"
-                                    fill="rgba(255,255,255,0.02)"></circle>
-                            <circle class="progress-ring-circle" stroke="url(#skillGradient)" stroke-width="6"
-                                    stroke-linecap="round" cx="50" cy="50" r="40" fill="transparent"
-                                    stroke-dasharray="251.2" stroke-dashoffset="25.12"></circle> <!-- %90 -->
-                        </svg>
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            <span class="text-lg font-bold text-white group-hover:text-primary transition-colors">90%</span>
+                @foreach(var item in Model)
+                {
+                    <div class="skill-card w-40 md:w-56 snap-start bg-card p-4 rounded-2xl border border-white/5 hover:border-primary/30 transition-all duration-300 group flex flex-col items-center hover:-translate-y-2">
+                        <div class="relative w-20 h-20 mb-3">
+                            <svg class="w-full h-full" viewBox="0 0 100 100">
+                                <circle class="text-white/10 stroke-current" stroke-width="6" cx="50" cy="50" r="40"
+                                        fill="rgba(255,255,255,0.02)"></circle>
+                                <circle class="progress-ring-circle" stroke="url(#skillGradient)" stroke-width="6"
+                                        stroke-linecap="round" cx="50" cy="50" r="40" fill="transparent"
+                                        stroke-dasharray="251.2" stroke-dashoffset="128.1"></circle> <!-- %49 -->
+                            </svg>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <span class="text-lg font-bold text-white group-hover:text-primary transition-colors">@item.SkillsPercent %</span>
+                            </div>
                         </div>
+                        <h3 class="font-bold text-base text-white group-hover:text-primary transition-colors text-center">
+                            @item.SkillName
+                        </h3>
                     </div>
-                    <h3 class="font-bold text-base text-white group-hover:text-primary transition-colors text-center">
-                        ASP.NET Core
-                    </h3>
-                </div>
-                <div class="skill-card w-40 md:w-56 snap-start bg-card p-4 rounded-2xl border border-white/5 hover:border-primary/30 transition-all duration-300 group flex flex-col items-center hover:-translate-y-2">
-                    <div class="relative w-20 h-20 mb-3">
-                        <svg class="w-full h-full" viewBox="0 0 100 100">
-                            <circle class="text-white/10 stroke-current" stroke-width="6" cx="50" cy="50" r="40"
-                                    fill="rgba(255,255,255,0.02)"></circle>
-                            <circle class="progress-ring-circle" stroke="url(#skillGradient)" stroke-width="6"
-                                    stroke-linecap="round" cx="50" cy="50" r="40" fill="transparent"
-                                    stroke-dasharray="251.2" stroke-dashoffset="25.12"></circle> <!-- %90 -->
-                        </svg>
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            <span class="text-lg font-bold text-white group-hover:text-primary transition-colors">90%</span>
-                        </div>
-                    </div>
-                    <h3 class="font-bold text-base text-white group-hover:text-primary transition-colors text-center">
-                        ASP.NET Core
-                    </h3>
-                </div>
-                <!-- Skill 2: SQL -->
-                <div class="skill-card w-40 md:w-56 snap-start bg-card p-4 rounded-2xl border border-white/5 hover:border-primary/30 transition-all duration-300 group flex flex-col items-center hover:-translate-y-2">
-                    <div class="relative w-20 h-20 mb-3">
-                        <svg class="w-full h-full" viewBox="0 0 100 100">
-                            <circle class="text-white/10 stroke-current" stroke-width="6" cx="50" cy="50" r="40"
-                                    fill="rgba(255,255,255,0.02)"></circle>
-                            <circle class="progress-ring-circle" stroke="url(#skillGradient)" stroke-width="6"
-                                    stroke-linecap="round" cx="50" cy="50" r="40" fill="transparent"
-                                    stroke-dasharray="251.2" stroke-dashoffset="75.36"></circle> <!-- %70 -->
-                        </svg>
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            <span class="text-lg font-bold text-white group-hover:text-primary transition-colors">70%</span>
-                        </div>
-                    </div>
-                    <h3 class="font-bold text-base text-white group-hover:text-primary transition-colors text-center">
-                        SQL
-                    </h3>
-                </div>
-
-                <!-- Skill 3: React -->
-                <div class="skill-card w-40 md:w-56 snap-start bg-card p-4 rounded-2xl border border-white/5 hover:border-primary/30 transition-all duration-300 group flex flex-col items-center hover:-translate-y-2">
-                    <div class="relative w-20 h-20 mb-3">
-                        <svg class="w-full h-full" viewBox="0 0 100 100">
-                            <circle class="text-white/10 stroke-current" stroke-width="6" cx="50" cy="50" r="40"
-                                    fill="rgba(255,255,255,0.02)"></circle>
-                            <circle class="progress-ring-circle" stroke="url(#skillGradient)" stroke-width="6"
-                                    stroke-linecap="round" cx="50" cy="50" r="40" fill="transparent"
-                                    stroke-dasharray="251.2" stroke-dashoffset="125.6"></circle> <!-- %50 -->
-                        </svg>
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            <span class="text-lg font-bold text-white group-hover:text-primary transition-colors">50%</span>
-                        </div>
-                    </div>
-                    <h3 class="font-bold text-base text-white group-hover:text-primary transition-colors text-center">
-                        React
-                    </h3>
-                </div>
-
-                <!-- Skill 4: Angular -->
-                <div class="skill-card w-40 md:w-56 snap-start bg-card p-4 rounded-2xl border border-white/5 hover:border-primary/30 transition-all duration-300 group flex flex-col items-center hover:-translate-y-2">
-                    <div class="relative w-20 h-20 mb-3">
-                        <svg class="w-full h-full" viewBox="0 0 100 100">
-                            <circle class="text-white/10 stroke-current" stroke-width="6" cx="50" cy="50" r="40"
-                                    fill="rgba(255,255,255,0.02)"></circle>
-                            <circle class="progress-ring-circle" stroke="url(#skillGradient)" stroke-width="6"
-                                    stroke-linecap="round" cx="50" cy="50" r="40" fill="transparent"
-                                    stroke-dasharray="251.2" stroke-dashoffset="42.7"></circle> <!-- %83 -->
-                        </svg>
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            <span class="text-lg font-bold text-white group-hover:text-primary transition-colors">83%</span>
-                        </div>
-                    </div>
-                    <h3 class="font-bold text-base text-white group-hover:text-primary transition-colors text-center">
-                        Angular
-                    </h3>
-                </div>
-
-                <!-- Skill 5: Entity Framework -->
-                <div class="skill-card w-40 md:w-56 snap-start bg-card p-4 rounded-2xl border border-white/5 hover:border-primary/30 transition-all duration-300 group flex flex-col items-center hover:-translate-y-2">
-                    <div class="relative w-20 h-20 mb-3">
-                        <svg class="w-full h-full" viewBox="0 0 100 100">
-                            <circle class="text-white/10 stroke-current" stroke-width="6" cx="50" cy="50" r="40"
-                                    fill="rgba(255,255,255,0.02)"></circle>
-                            <circle class="progress-ring-circle" stroke="url(#skillGradient)" stroke-width="6"
-                                    stroke-linecap="round" cx="50" cy="50" r="40" fill="transparent"
-                                    stroke-dasharray="251.2" stroke-dashoffset="37.68"></circle> <!-- %85 -->
-                        </svg>
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            <span class="text-lg font-bold text-white group-hover:text-primary transition-colors">85%</span>
-                        </div>
-                    </div>
-                    <h3 class="font-bold text-base text-white group-hover:text-primary transition-colors text-center">
-                        Entity Framework
-                    </h3>
-                </div>
-
-                <!-- Skill 6: WEB API -->
-                <div class="skill-card w-40 md:w-56 snap-start bg-card p-4 rounded-2xl border border-white/5 hover:border-primary/30 transition-all duration-300 group flex flex-col items-center hover:-translate-y-2">
-                    <div class="relative w-20 h-20 mb-3">
-                        <svg class="w-full h-full" viewBox="0 0 100 100">
-                            <circle class="text-white/10 stroke-current" stroke-width="6" cx="50" cy="50" r="40"
-                                    fill="rgba(255,255,255,0.02)"></circle>
-                            <circle class="progress-ring-circle" stroke="url(#skillGradient)" stroke-width="6"
-                                    stroke-linecap="round" cx="50" cy="50" r="40" fill="transparent"
-                                    stroke-dasharray="251.2" stroke-dashoffset="25.12"></circle> <!-- %90 -->
-                        </svg>
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            <span class="text-lg font-bold text-white group-hover:text-primary transition-colors">90%</span>
-                        </div>
-                    </div>
-                    <h3 class="font-bold text-base text-white group-hover:text-primary transition-colors text-center">
-                        WEB API
-                    </h3>
-                </div>
-
-                <!-- Skill 7: AWS -->
-                <div class="skill-card w-40 md:w-56 snap-start bg-card p-4 rounded-2xl border border-white/5 hover:border-primary/30 transition-all duration-300 group flex flex-col items-center hover:-translate-y-2">
-                    <div class="relative w-20 h-20 mb-3">
-                        <svg class="w-full h-full" viewBox="0 0 100 100">
-                            <circle class="text-white/10 stroke-current" stroke-width="6" cx="50" cy="50" r="40"
-                                    fill="rgba(255,255,255,0.02)"></circle>
-                            <circle class="progress-ring-circle" stroke="url(#skillGradient)" stroke-width="6"
-                                    stroke-linecap="round" cx="50" cy="50" r="40" fill="transparent"
-                                    stroke-dasharray="251.2" stroke-dashoffset="62.8"></circle> <!-- %75 -->
-                        </svg>
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            <span class="text-lg font-bold text-white group-hover:text-primary transition-colors">75%</span>
-                        </div>
-                    </div>
-                    <h3 class="font-bold text-base text-white group-hover:text-primary transition-colors text-center">
-                        AWS
-                    </h3>
-                </div>
-
-                <!-- Skill 8: Azure -->
-                <div class="skill-card w-40 md:w-56 snap-start bg-card p-4 rounded-2xl border border-white/5 hover:border-primary/30 transition-all duration-300 group flex flex-col items-center hover:-translate-y-2">
-                    <div class="relative w-20 h-20 mb-3">
-                        <svg class="w-full h-full" viewBox="0 0 100 100">
-                            <circle class="text-white/10 stroke-current" stroke-width="6" cx="50" cy="50" r="40"
-                                    fill="rgba(255,255,255,0.02)"></circle>
-                            <circle class="progress-ring-circle" stroke="url(#skillGradient)" stroke-width="6"
-                                    stroke-linecap="round" cx="50" cy="50" r="40" fill="transparent"
-                                    stroke-dasharray="251.2" stroke-dashoffset="128.1"></circle> <!-- %49 -->
-                        </svg>
-                        <div class="absolute inset-0 flex items-center justify-center">
-                            <span class="text-lg font-bold text-white group-hover:text-primary transition-colors">49%</span>
-                        </div>
-                    </div>
-                    <h3 class="font-bold text-base text-white group-hover:text-primary transition-colors text-center">
-                        Azure
-                    </h3>
-                </div>
-
+                }
             </div>
 
             <!-- Sağ Buton -->
