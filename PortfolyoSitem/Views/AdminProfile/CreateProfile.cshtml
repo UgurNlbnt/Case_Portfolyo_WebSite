@@ -1,0 +1,159 @@
+﻿@model PortfolyoSitem.Data.ProfileTable
+@{
+    ViewData["Title"] = "Yeni Profil Oluşturma Sayfası";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+}
+
+<div class="page-section">
+
+    <!-- ÜST BAR -->
+    <div class="flex-between mb-30">
+
+        <!-- GERİ DÖN -->
+        <a href="/AdminProfile/Index" class="btn btn-gradient-back">
+            <i class="fa-solid fa-arrow-left"></i> Geri Dön
+        </a>
+    </div>
+
+    <!-- FORM KART -->
+    <div class="form-card">
+
+        <form method="post" action="/AdminProfile/CreateProfile">
+
+            <div class="form-group">
+                <label>Ad Soyad</label>
+                <input type="text"
+                       name="FullName"
+                       class="form-input"
+                       value=""
+                       required />
+            </div>
+
+            <div class="form-group">
+                <label>Başlık</label>
+                <input type="text"
+                       name="Title"
+                       class="form-input"
+                       value=""
+                       required />
+            </div>
+
+            <div class="form-group">
+                <label>Kısa Açıklama</label>
+                <textarea name="ShortDescription"
+                          class="form-textarea"
+                          rows="4"
+                          required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>Görsel URL</label>
+                <input type="text"
+                       name="ImageUrl"
+                       class="form-input"
+                       value="" />
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-success">
+                    <i class="fa-solid fa-check"></i> Yeni Kayıt Ekle
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+<style>
+    .page-section {
+        padding: 30px;
+    }
+
+    .flex-between {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+
+    .page-title {
+        font-size: 26px;
+        font-weight: 700;
+        background: linear-gradient(135deg, #ffffff, #ffffff, #ffffff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .btn-gradient-back {
+        background: linear-gradient(135deg, #ff0000, #ff7f00, #ffd700);
+        color: #;
+        padding: 10px 16px;
+        border-radius: 12px;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+        transition: 0.3s;
+    }
+
+        .btn-gradient-back:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+    .form-card {
+        background: #141414;
+        border-radius: 16px;
+        padding: 30px;
+        max-width: 700px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ccc;
+            font-weight: 500;
+        }
+
+    .form-input,
+    .form-textarea {
+        width: 100%;
+        padding: 12px 14px;
+        background: #1c1c1c;
+        border: 1px solid #333;
+        border-radius: 10px;
+        color: #fff;
+        outline: none;
+    }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            border-color: #ff7f00;
+        }
+
+    .form-actions {
+        margin-top: 30px;
+        text-align: right;
+    }
+
+    .btn-success {
+        background: #16a34a;
+        color: #fff;
+        padding: 12px 22px;
+        border-radius: 12px;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+    }
+
+        .btn-success:hover {
+            background: #15803d;
+        }
+</style>
