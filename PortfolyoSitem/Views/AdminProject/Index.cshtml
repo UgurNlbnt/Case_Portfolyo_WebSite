@@ -1,4 +1,4 @@
-﻿@using PortfolyoSitem.Data
+@using PortfolyoSitem.Data
 @model List<ProjectsTable>
 
 @{
@@ -44,9 +44,10 @@
 
     <!-- ÜST BUTON -->
     <div class="toolbar">
-        <button class="btn btn-add">
+        <a href="/AdminProject/CreateProject"
+           class="btn btn-add">
             <i class="fa-solid fa-plus"></i> Yeni Proje Ekle
-        </button>
+        </a>
     </div>
 
     <!-- TABLO -->
@@ -56,6 +57,7 @@
                 <tr>
                     <th style="width:50px;">Id</th>
                     <th style="width:160px;">Proje Adı</th>
+                    <th style="width:120px;">Kategori</th>
                     <th style="width:280px;">Proje Açıklaması</th>
                     <th style="width:220px;">Kullanılan Teknolojiler</th>
                     <th style="width:220px;">Proje URL'si</th>
@@ -77,9 +79,13 @@
                             </td>
 
                             <td>
-                                <div class="clamp-3">
+                                @item.Category?.CategoryName
+                            </td>
+
+                            <td>
+                                
                                     @item.ProjectDescription
-                                </div>
+      
                             </td>
 
                             <td>
@@ -98,12 +104,16 @@
 
                             <td>
                                 <div class="action-buttons">
-                                    <button class="btn btn-sm btn-edit">
+                                    <a href="/AdminProject/UpdateProject/@item.ProjectId"
+                                       class="btn btn-sm btn-edit">
                                         <i class="fa-solid fa-pen"></i> Güncelle
-                                    </button>
-                                    <button class="btn btn-sm btn-delete">
+                                    </a>
+
+                                    <a href="/AdminProject/DeleteProject/@item.ProjectId"
+                                       class="btn btn-sm btn-delete"
+                                       onclick="return confirm('Bu kaydı silmek istediğinize emin misiniz?')">
                                         <i class="fa-solid fa-trash"></i> Sil
-                                    </button>
+                                    </a>
                                 </div>
                             </td>
                         </tr>

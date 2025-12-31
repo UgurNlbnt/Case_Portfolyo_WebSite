@@ -1,4 +1,4 @@
-﻿@using PortfolyoSitem.Data
+@using PortfolyoSitem.Data
 @model List<AboutTable>
 @{
     ViewData["Title"] = "Hakkımda";
@@ -6,3 +6,50 @@
     int count = 0;
 }
 
+<div id="section-hakkimda" class="page-section">
+    <div class="toolbar">
+        <a href="/AdminAbout/CreateAbout"
+           class="btn btn-add">
+            <i class="fa-solid fa-plus"></i> Yeni Hakkımda Bilgisi Ekle
+        </a>
+    </div>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Başlık</th>
+                    <th>Açıklama</th>
+                    <th style="width: 180px;">İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var item in Model)
+                {
+                    <tr>
+                        
+                        <td>
+                            @item.Title
+                        </td>
+                        <td>
+                            @item.Description
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <a href="/AdminAbout/UpdateAbout/@item.AboutId"
+                                   class="btn btn-sm btn-edit">
+                                    <i class="fa-solid fa-pen"></i> Güncelle
+                                </a>
+
+                                <a href="/AdminAbout/DeleteAbout/@item.AboutId"
+                                   class="btn btn-sm btn-delete"
+                                   onclick="return confirm('Bu kaydı silmek istediğinize emin misiniz?')">
+                                    <i class="fa-solid fa-trash"></i> Sil
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

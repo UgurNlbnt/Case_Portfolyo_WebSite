@@ -1,6 +1,6 @@
-﻿@model PortfolyoSitem.Data.ProfileTable
+﻿@model PortfolyoSitem.Data.AboutTable
 @{
-    ViewData["Title"] = "Profil Güncelleme Sayfası";
+    ViewData["Title"] = "Yeni Hakkımda Bilgisi Oluşturma Sayfası";
     Layout = "~/Views/AdminLayout/Index.cshtml";
 }
 
@@ -10,7 +10,7 @@
     <div class="flex-between mb-30">
 
         <!-- GERİ DÖN -->
-        <a href="/AdminProfile/Index" class="btn btn-gradient-back">
+        <a href="/AdminAbout/Index" class="btn btn-gradient-back">
             <i class="fa-solid fa-arrow-left"></i> Geri Dön
         </a>
     </div>
@@ -18,14 +18,7 @@
     <!-- FORM KART -->
     <div class="form-card">
 
-        <form method="post" action="/AdminProfile/UpdateProfile">
-
-            <input type="hidden" name="ProfileId" value="@Model.ProfileId" />
-
-            <div class="form-group">
-                <label>Ad Soyad</label>
-                <input asp-for="FullName" class="form-input" required />
-            </div>
+        <form method="post" action="/AdminAbout/CreateAbout">
 
             <div class="form-group">
                 <label>Başlık</label>
@@ -33,21 +26,16 @@
             </div>
 
             <div class="form-group">
-                <label>Açıklama</label>
-                <input asp-for="ShortDescription" class="form-input" required />
+                <label>İçerik</label>
+                <input asp-for="Description" class="form-input" required />
             </div>
 
-            <div class="form-group">
-                <label>Görsel URL</label>
-                <input asp-for="ImageUrl" class="form-input" required />
-            </div>
 
             <div class="form-actions">
                 <button type="submit" class="btn-success">
-                    <i class="fa-solid fa-check"></i> Güncelle
+                    <i class="fa-solid fa-check"></i> Yeni Hakkımda Bilgisi Ekle
                 </button>
             </div>
-
 
         </form>
 
@@ -87,10 +75,10 @@
         transition: 0.3s;
     }
 
-    .btn-gradient-back:hover {
-        transform: translateY(-2px);
-        opacity: 0.9;
-    }
+        .btn-gradient-back:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
 
     .form-card {
         background: #141414;
@@ -104,12 +92,12 @@
         margin-bottom: 20px;
     }
 
-    .form-group label {
-        display: block;
-        margin-bottom: 8px;
-        color: #ccc;
-        font-weight: 500;
-    }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ccc;
+            font-weight: 500;
+        }
 
     .form-input,
     .form-textarea {
@@ -122,10 +110,10 @@
         outline: none;
     }
 
-    .form-input:focus,
-    .form-textarea:focus {
-        border-color: #ff7f00;
-    }
+        .form-input:focus,
+        .form-textarea:focus {
+            border-color: #ff7f00;
+        }
 
     .form-actions {
         margin-top: 30px;
@@ -142,7 +130,7 @@
         cursor: pointer;
     }
 
-    .btn-success:hover {
-        background: #15803d;
-    }
+        .btn-success:hover {
+            background: #15803d;
+        }
 </style>

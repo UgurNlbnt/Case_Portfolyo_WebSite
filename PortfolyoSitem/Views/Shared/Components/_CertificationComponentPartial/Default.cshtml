@@ -1,4 +1,4 @@
-﻿@using PortfolyoSitem.Data
+@using PortfolyoSitem.Data
 @model List<CertificateTable>
 
 <section id="certificates" class="min-h-screen flex flex-col justify-center px-8 md:px-20 py-20 border-t border-white/5 reveal-section">
@@ -27,15 +27,17 @@
                     {
                         var item = Model[i];
                         // class="cert-item" ekledik ki JS ile bulabilelim
-                        <div class="cert-item bg-card p-4 rounded-xl border border-white/10 hover:border-primary/50 transition-all text-center group cursor-pointer hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/10 animate-fade-in"
+                        <div class="cert-item rounded-xl p-[2px] bg-gradient-to-r from-red-600/40 via-orange-500/40 to-yellow-400/40 transition-all group cursor-pointer hover:-translate-y-1 hover:shadow-[0_0_20px_rgba(255,87,34,0.15)] animate-fade-in"
                              style="@(i < 4 ? "" : "display:none;")">
-                            <div class="w-12 h-12 mx-auto bg-white/5 rounded-full flex items-center justify-center mb-3 group-hover:bg-primary/20 transition-colors">
-                                <span class="material-symbols-outlined text-2xl text-primary">verified</span>
-                            </div>
+                            <div class="bg-card p-4 rounded-xl h-full text-center">
+                                <div class="w-12 h-12 mx-auto bg-white/5 rounded-full flex items-center justify-center mb-3 group-hover:bg-primary/20 transition-colors">
+                                    <span class="material-symbols-outlined text-2xl text-primary">verified</span>
+                                </div>
 
-                            <h3 class="font-bold text-white text-sm md:text-base mb-1 line-clamp-1">@item.CertificateName</h3>
-                            <p class="text-xs text-muted">@item.CompanyName</p>
-                            <p class="text-[10px] text-gray-500 mt-1">@item.Year</p>
+                                <h3 class="font-bold text-white text-sm md:text-base mb-1 line-clamp-1">@item.CertificateName</h3>
+                                <p class="text-xs text-muted">@item.CompanyName</p>
+                                <p class="text-[10px] text-gray-500 mt-1">@item.Year</p>
+                            </div>
                         </div>
                     }
 

@@ -9,9 +9,10 @@
 
 <div id="section-deneyimler" class="page-section">
     <div class="toolbar">
-        <button class="btn btn-add">
-            <i class="fa-solid fa-plus"></i> Yeni Deneyim Ekle
-        </button>
+        <a href="/AdminExperience/CreateExperience"
+           class="btn btn-add">
+            <i class="fa-solid fa-plus"></i> Yeni Bilgi Ekle
+        </a>
     </div>
     <div class="table-container">
         <table>
@@ -39,14 +40,16 @@
                         <td>@item.Year</td>
                         <td>
                             <div class="action-buttons">
-                                <button class="btn btn-sm btn-edit">
-                                    <i class="fa-solid fa-pen"></i>
-                                    Güncelle
-                                </button>
-                                <button class="btn btn-sm btn-delete">
-                                    <i class="fa-solid fa-trash"></i>
-                                    Sil
-                                </button>
+                                <a href="/AdminExperience/UpdateExperience/@item.ExperienceId"
+                                   class="btn btn-sm btn-edit">
+                                    <i class="fa-solid fa-pen"></i> Güncelle
+                                </a>
+
+                                <a href="/AdminExperience/DeleteExperience/@item.ExperienceId"
+                                   class="btn btn-sm btn-delete"
+                                   onclick="return confirm('Bu kaydı silmek istediğinize emin misiniz?')">
+                                    <i class="fa-solid fa-trash"></i> Sil
+                                </a>
                             </div>
                         </td>
                     </tr>

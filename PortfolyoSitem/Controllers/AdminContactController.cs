@@ -1,5 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using PortfolyoSitem.Data;
+using System.Data.Entity;
 
 namespace PortfolyoSitem.Controllers
 {
@@ -12,8 +13,46 @@ namespace PortfolyoSitem.Controllers
         }
         public IActionResult Index()
         {
-            var values = _context.ContactTables.FirstOrDefault();
+            var values = _context.ContactTables.ToList();
             return View(values);
+        }
+
+        [HttpGet]
+        public IActionResult CreateContact()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult CreateContact(ContactTable education)
+        {
+            _context.ContactTables.Add(education);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+
+        [HttpGet]
+        public IActionResult UpdateContact(int id)
+        {
+            var values = _context.ContactTables.Find(id);
+            return View(values);
+        }
+
+        [HttpPost]
+        public IActionResult UpdateContact(ContactTable education)
+        {
+            var values = _context.ContactTables.Update(education);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult DeleteContact(int id)
+        {
+            var values = _context.ContactTables.Find(id);
+            _context.ContactTables.Remove(values);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
         }
     }
 }

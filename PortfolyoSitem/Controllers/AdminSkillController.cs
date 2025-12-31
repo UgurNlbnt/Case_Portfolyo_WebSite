@@ -12,8 +12,46 @@ namespace PortfolyoSitem.Controllers
         }
         public IActionResult Index()
         {
-            var skills = _context.SkillsTables.ToList();
-            return View(skills);
+            var values = _context.SkillsTables.ToList();
+            return View(values);
+        }
+
+        [HttpGet]
+        public IActionResult CreateSkill()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult CreateSkill(SkillsTable project)
+        {
+            _context.SkillsTables.Add(project);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+
+        [HttpGet]
+        public IActionResult UpdateSkill(int id)
+        {
+            var values = _context.SkillsTables.Find(id);
+            return View(values);
+        }
+
+        [HttpPost]
+        public IActionResult UpdateSkill(SkillsTable project)
+        {
+            var values = _context.SkillsTables.Update(project);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult DeleteSkill(int id)
+        {
+            var values = _context.SkillsTables.Find(id);
+            _context.SkillsTables.Remove(values);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
         }
     }
 }

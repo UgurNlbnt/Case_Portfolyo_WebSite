@@ -1,5 +1,5 @@
-﻿@using PortfolyoSitem.Data
-@model ContactTable
+@using PortfolyoSitem.Data
+@model List<ContactTable>
 @{
     ViewData["Title"] = "İletişim";
     Layout = "~/Views/AdminLayout/Index.cshtml";
@@ -7,9 +7,10 @@
 
 <div id="section-iletisim" class="page-section" >
     <div class="toolbar">
-        <button class="btn btn-add">
+        <a href="/AdminContact/CreateContact"
+           class="btn btn-add">
             <i class="fa-solid fa-plus"></i> Yeni İletişim Bilgisi Ekle
-        </button>
+        </a>
     </div>
     <div class="table-container">
         <table>
@@ -25,34 +26,39 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>@Model.ContactId</td>
-                    <td>
-                        @Model.ShortDescription
-                    </td>
-                    <td>@Model.EmailAdress</td>
-                    <td style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                        @Model.LinkedlnUrl
-                    </td>
-                    <td style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                        @Model.GithubUrl
-                    </td>
-                    <td style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                        @Model.InstagramUrl
-                    </td>
-                    <td>
-                        <div class="action-buttons">
-                            <button class="btn btn-sm btn-edit">
-                                <i class="fa-solid fa-pen"></i>
-                                Güncelle
-                            </button>
-                            <button class="btn btn-sm btn-delete">
-                                <i class="fa-solid fa-trash"></i>
-                                Sil
-                            </button>
-                        </div>
-                    </td>
-                </tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.ContactId</td>
+                        <td>
+                            @item.ShortDescription
+                        </td>
+                        <td>@item.EmailAdress</td>
+                        <td style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                            @item.LinkedlnUrl
+                        </td>
+                        <td style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                            @item.GithubUrl
+                        </td>
+                        <td style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                            @item.InstagramUrl
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <a href="/AdminContact/UpdateContact/@item.ContactId"
+                                   class="btn btn-sm btn-edit">
+                                    <i class="fa-solid fa-pen"></i> Güncelle
+                                </a>
+
+                                <a href="/AdminContact/DeleteContact/@item.ContactId"
+                                   class="btn btn-sm btn-delete"
+                                   onclick="return confirm('Bu kaydı silmek istediğinize emin misiniz?')">
+                                    <i class="fa-solid fa-trash"></i> Sil
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
             </tbody>
         </table>
     </div>

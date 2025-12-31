@@ -8,17 +8,18 @@
 
 <div id="section-yetenekler" class="page-section">
     <div class="toolbar">
-        <button class="btn btn-add">
-            <i class="fa-solid fa-plus"></i> Yeni Yetenek Ekle
-        </button>
+        <a href="/AdminSkill/CreateSkill"
+           class="btn btn-add">
+            <i class="fa-solid fa-plus"></i> Yeni Proje Ekle
+        </a>
     </div>
     <div class="table-container">
         <table>
             <thead>
                 <tr>
-                    <th style="width: 50px;">SkillId</th>
-                    <th style="width: 200px;">SkillName</th>
-                    <th>Percent (Yüzde)</th>
+                    <th style="width: 50px;">Id</th>
+                    <th style="width: 200px;">Yetenek Adı</th>
+                    <th>Yüzde</th>
                     <th style="width: 180px;">İşlemler</th>
                 </tr>
             </thead>
@@ -39,14 +40,16 @@
                         </td>
                         <td>
                             <div class="action-buttons">
-                                <button class="btn btn-sm btn-edit">
-                                    <i class="fa-solid fa-pen"></i>
-                                    Güncelle
-                                </button>
-                                <button class="btn btn-sm btn-delete">
-                                    <i class="fa-solid fa-trash"></i>
-                                    Sil
-                                </button>
+                                <a href="/AdminSkill/UpdateSkill/@item.SkillsId"
+                                   class="btn btn-sm btn-edit">
+                                    <i class="fa-solid fa-pen"></i> Güncelle
+                                </a>
+
+                                <a href="/AdminSkill/DeleteSkill/@item.SkillsId"
+                                   class="btn btn-sm btn-delete"
+                                   onclick="return confirm('Bu kaydı silmek istediğinize emin misiniz?')">
+                                    <i class="fa-solid fa-trash"></i> Sil
+                                </a>
                             </div>
                         </td>
                     </tr>
