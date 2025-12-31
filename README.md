@@ -92,7 +92,8 @@ Geliştirilen projeler kategori bazlı olarak listelenmektedir.
 
 ### 📬 İletişim
 İletişim ve sosyal medya bilgileri bu bölümde bulunur.
-<img width="1919" height="878" alt="8" src="https://github.com/user-attachments/assets/999f412a-610a-4433-b2bc-5615426e94d1" />
+<img width="1919" height="870" alt="Screenshot_2" src="https://github.com/user-attachments/assets/da813222-6197-4635-9324-8151c982ccbd" />
+
 
 
 ---
@@ -105,8 +106,9 @@ Bu yapı sayesinde site tamamen **dinamik** hale getirilmiştir.
 ---
 
 ### 📊 Dashboard
-Sistemin genel durumunu gösteren özet ekran.
-<img width="1919" height="875" alt="9" src="https://github.com/user-attachments/assets/96a68311-ef16-4222-b2f1-16d662aa6895" />
+Sistemin genel durumunu ve gelen mesajları gösteren özet ekran.
+<img width="1917" height="868" alt="Screenshot_4" src="https://github.com/user-attachments/assets/945377fd-3ad0-4df7-8348-87e7249f2443" />
+
 
 
 ---
@@ -163,7 +165,9 @@ Projelerin detaylı şekilde yönetildiği ekran.
 
 ### 📬 İletişim Yönetimi
 İletişim bilgilerinin düzenlendiği alan.
-<img width="1919" height="878" alt="17" src="https://github.com/user-attachments/assets/f1b1093e-a94a-4280-8618-0b3a66b5fcf2" />
+<img width="1919" height="877" alt="Screenshot_3" src="https://github.com/user-attachments/assets/14571e5b-b934-43d5-9c2a-13e938e62e2e" />
+
+
 
 ---
 
