@@ -1,0 +1,58 @@
+﻿@using PortfolyoSitem.Data
+@model List<ProfileTable>
+@{
+    ViewData["Title"] = "Profil";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+    int count = 0;
+}
+
+<div id="section-ana-bilgiler" class="page-section">
+    <div class="toolbar">
+        <button class="btn btn-add">
+            <i class="fa-solid fa-plus"></i> Yeni Bilgi Ekle
+        </button>
+    </div>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th style="width: 80px;">Görsel</th>
+                    <th>Başlık</th>
+                    <th>Alt Başlık</th>
+                    <th>Açıklama</th>
+                    <th style="width: 180px;">İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    count++;
+                    <tr>
+                        <td>@count</td>
+                        <td>
+                            <img src="@item.ImageUrl" alt="Profil" class="table-img" />
+                        </td>
+                        <td>@item.FullName</td>
+                        <td>@item.Title</td>
+                        <td>@item.ShortDescription</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-sm btn-edit">
+                                    <i class="fa-solid fa-pen"></i> Güncelle
+                                </button>
+                                <button class="btn btn-sm btn-delete">
+                                    <i class="fa-solid fa-trash"></i> Sil
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+

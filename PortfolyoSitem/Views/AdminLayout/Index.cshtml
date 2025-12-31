@@ -1,0 +1,579 @@
+﻿
+@{
+    Layout = null;
+    string currentController = ViewContext.RouteData.Values["controller"]?.ToString()?.ToLower();
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Paneli - Portfolyo Yönetimi</title>
+    <!-- FontAwesome İkonları için CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Poppins) -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <style>
+        :root {
+            /* Tema Renkleri: Kırmızı, Turuncu, Sarı Geçişleri */
+            --primary-gradient: linear-gradient(135deg, #FF0000 0%, #FF7F00 50%, #FFD700 100%);
+            --sidebar-bg: #1a1a1a;
+            --main-bg: #121212;
+            --text-color: #ffffff;
+            --text-muted: #a0a0a0;
+            --card-bg: #252525;
+            --hover-bg: rgba(255, 255, 255, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            text-decoration: none;
+            list-style: none;
+        }
+
+        body {
+            background-color: var(--main-bg);
+            color: var(--text-color);
+            display: flex;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* --- SIDEBAR TASARIMI --- */
+        .sidebar {
+            width: 280px;
+            background-color: var(--sidebar-bg);
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid #333;
+            z-index: 100;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #333;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: var(--primary-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+        }
+
+        .logo-text h2 {
+            font-size: 18px;
+            font-weight: 600;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-text span {
+            font-size: 12px;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+        }
+
+        .menu-title {
+            color: var(--text-muted);
+            font-size: 12px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding-left: 10px;
+        }
+
+        .sidebar-menu ul li {
+            margin-bottom: 8px;
+        }
+
+            .sidebar-menu ul li a {
+                display: flex;
+                align-items: center;
+                padding: 12px 15px;
+                color: var(--text-muted);
+                border-radius: 10px;
+                transition: all 0.3s ease;
+                font-size: 14px;
+            }
+
+                .sidebar-menu ul li a i {
+                    width: 25px;
+                    margin-right: 10px;
+                    font-size: 18px;
+                    transition: all 0.3s ease;
+                }
+
+                /* Hover Efekti */
+                .sidebar-menu ul li a:hover {
+                    background-color: var(--hover-bg);
+                    color: #fff;
+                    padding-left: 20px;
+                    /* Hafif kayma efekti */
+                }
+
+                    .sidebar-menu ul li a:hover i {
+                        color: #FF7F00;
+                        /* Turuncu hover */
+                    }
+
+                /* Aktif Menü Elemanı */
+                .sidebar-menu ul li a.active {
+                    background: var(--primary-gradient);
+                    color: #fff;
+                    box-shadow: 0 4px 15px rgba(255, 127, 0, 0.3);
+                }
+
+                    .sidebar-menu ul li a.active i {
+                        color: #fff;
+                    }
+
+        /* Sidebar Alt Kısım (Kullanıcı Profili) */
+        .user-profile {
+            margin-top: auto;
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            border: 1px solid #333;
+        }
+
+        .user-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #444;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+            .user-img img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+        .user-info h4 {
+            font-size: 14px;
+            color: #fff;
+        }
+
+        .user-info p {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .logout-btn {
+            margin-left: auto;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+            .logout-btn:hover {
+                color: #FF0000;
+            }
+
+        /* --- MAIN CONTENT TASARIMI --- */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            /* Sidebar genişliği kadar boşluk */
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .page-title h1 {
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .page-title p {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .date-badge {
+            background: var(--card-bg);
+            padding: 10px 20px;
+            border-radius: 30px;
+            border: 1px solid #333;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* --- TABLO VE İÇERİK STİLLERİ --- */
+        .content-area {
+            /* Flex özellikleri kaldırıldı, blok yapı */
+            display: block;
+            background: transparent;
+            border: none;
+        }
+
+        .toolbar {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            color: white;
+        }
+
+        .btn-add {
+            background: var(--primary-gradient);
+            box-shadow: 0 4px 15px rgba(255, 127, 0, 0.3);
+        }
+
+            .btn-add:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(255, 127, 0, 0.4);
+            }
+
+        .table-container {
+            background: var(--card-bg);
+            border-radius: 15px;
+            border: 1px solid #333;
+            overflow: hidden;
+            /* Köşelerin yuvarlak kalması için */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 15px 20px;
+            text-align: left;
+            border-bottom: 1px solid #333;
+            color: var(--text-muted);
+            font-size: 14px;
+            vertical-align: middle;
+        }
+
+        th {
+            background-color: rgba(255, 255, 255, 0.02);
+            font-weight: 600;
+            color: #fff;
+            text-transform: uppercase;
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover td {
+            background-color: var(--hover-bg);
+            color: #fff;
+        }
+
+        .table-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #444;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 12px;
+            border-radius: 6px;
+        }
+
+        .btn-edit {
+            background-color: #28a745;
+            /* Yeşil */
+            color: white;
+        }
+
+            .btn-edit:hover {
+                background-color: #218838;
+            }
+
+        .btn-delete {
+            background-color: #ef4444;
+            /* Kırmızı */
+            color: white;
+        }
+
+            .btn-delete:hover {
+                background-color: #dc2626;
+            }
+
+        /* Progress Bar Stilleri */
+        .progress-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .progress-container {
+            flex: 1;
+            background-color: #333;
+            border-radius: 10px;
+            overflow: hidden;
+            height: 8px;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #FF0000 0%, #FF7F00 50%, #FFD700 100%);
+            border-radius: 10px;
+            width: 0%;
+            /* JS veya inline style ile ayarlanacak */
+            transition: width 1s ease-in-out;
+        }
+
+        .progress-text {
+            font-size: 12px;
+            font-weight: 600;
+            color: #fff;
+            width: 40px;
+            text-align: right;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <!-- Logo Alanı -->
+        <div class="logo-area">
+            <div class="logo-icon">
+                <i class="fa-solid fa-layer-group"></i>
+            </div>
+            <div class="logo-text">
+                <h2>Admin Paneli</h2>
+                <span>PORTFOLYO YÖNETİMİ</span>
+            </div>
+        </div>
+
+        <!-- Menü Başlığı -->
+        <div class="menu-title">Sayfalar</div>
+
+        <!-- Navigasyon -->
+        <nav class="sidebar-menu">
+            <ul>
+                <!-- Dashboard -->
+                <li>
+                    <a asp-controller="AdminDashboard"
+                       asp-action="Index"
+                       class="@(currentController == "admindashboard" ? "active" : "")">
+                        <i class="fa-solid fa-table-columns"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+
+                <!-- Ana Bilgiler -->
+                <li>
+                    <a asp-controller="AdminProfile"
+                       asp-action="Index"
+                       class="@(currentController == "adminprofile" ? "active" : "")">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <span>Ana Bilgiler</span>
+                    </a>
+                </li>
+
+                <!-- Hakkımda -->
+                <li>
+                    <a asp-controller="AdminAbout"
+                       asp-action="Index"
+                       class="@(currentController == "adminabout" ? "active" : "")">
+                        <i class="fa-solid fa-user"></i>
+                        <span>Hakkımda</span>
+                    </a>
+                </li>
+
+                <!-- Deneyimler -->
+                <li>
+                    <a asp-controller="AdminExperience"
+                       asp-action="Index"
+                       class="@(currentController == "adminexperience" ? "active" : "")">
+                        <i class="fa-solid fa-briefcase"></i>
+                        <span>Deneyimler</span>
+                    </a>
+                </li>
+
+                <!-- Eğitim -->
+                <li>
+                    <a asp-controller="AdminEducation"
+                       asp-action="Index"
+                       class="@(currentController == "admineducation" ? "active" : "")">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                        <span>Eğitim</span>
+                    </a>
+                </li>
+
+                <!-- Yetenekler -->
+                <li>
+                    <a asp-controller="AdminSkill"
+                       asp-action="Index"
+                       class="@(currentController == "adminskill" ? "active" : "")">
+                        <i class="fa-solid fa-code"></i>
+                        <span>Yetenekler</span>
+                    </a>
+                </li>
+
+                <!-- Sertifikalar -->
+                <li>
+                    <a asp-controller="AdminCertificate"
+                       asp-action="Index"
+                       class="@(currentController == "admincertificate" ? "active" : "")">
+                        <i class="fa-solid fa-certificate"></i>
+                        <span>Sertifikalar</span>
+                    </a>
+                </li>
+
+                <!-- Projeler -->
+                <li>
+                    <a asp-controller="AdminProject"
+                       asp-action="Index"
+                       class="@(currentController == "adminproject" ? "active" : "")">
+                        <i class="fa-solid fa-rocket"></i>
+                        <span>Projeler</span>
+                    </a>
+                </li>
+
+                <!-- İletişim -->
+                <li>
+                    <a asp-controller="AdminContact"
+                       asp-action="Index"
+                       class="@(currentController == "admincontact" ? "active" : "")">
+                        <i class="fa-solid fa-envelope"></i>
+                        <span>İletişim</span>
+                    </a>
+                </li>
+            </ul>
+
+        </nav>
+
+        <!-- Kullanıcı Profili (Alt Kısım) -->
+        <div class="user-profile">
+            <div class="user-img">
+                <i class="fa-solid fa-user" style="color: #fff;"></i>
+            </div>
+            <div class="user-info">
+                <h4>Admin</h4>
+                <p>Site Yöneticisi</p>
+            </div>
+            <div class="logout-btn">
+                <i class="fa-solid fa-right-from-bracket"></i>
+            </div>
+        </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+        <!-- Üst Başlık -->
+        <div class="header">
+            <div class="page-title">
+                <h1>@ViewData["Title"]</h1>
+                <p>Sistem üzerindeki güncel veriler ve yönetim paneli.</p>
+            </div>
+            <div class="date-badge">
+                <i class="fa-regular fa-calendar"></i>
+                <span id="current-date">25 Aralık, 2025</span>
+            </div>
+        </div>
+
+        <!-- İçerik Alanı: Bölümler -->
+        <div class="content-wrapper">
+
+            <!-- 0. Dashboard (Boş) -->
+            @RenderBody()
+
+        </div>
+    </main>
+
+    <script>
+        // Tarihi Güncelleme
+        const dateElement = document.getElementById('current-date');
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        dateElement.textContent = new Date().toLocaleDateString('tr-TR', options);
+
+        // Menü Aktiflik Fonksiyonu
+        function setActive(element, title, sectionId) {
+            // Tüm aktif sınıfları kaldır
+            const links = document.querySelectorAll('.sidebar-menu a');
+            links.forEach(link => link.classList.remove('active'));
+
+            // Tıklanana aktif sınıfı ekle
+            element.classList.add('active');
+
+            // Başlığı güncelle
+            document.getElementById('page-header').textContent = title;
+
+            // Bölüm Değiştirme Mantığı
+            const sections = document.querySelectorAll('.page-section');
+            sections.forEach(section => {
+                section.style.display = 'none'; // Önce hepsini gizle
+            });
+
+            // İlgili bölümü göster
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.style.display = 'block';
+            }
+        }
+    </script>
+</body>
+
+</html>

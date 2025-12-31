@@ -1,0 +1,115 @@
+﻿@using PortfolyoSitem.Data
+@model List<ProjectsTable>
+
+@{
+    ViewData["Title"] = "Projeler";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+    int count = 0;
+}
+
+<style>
+    /* TABLO ORANI SABİTLENİR */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+    }
+
+    /* AÇIKLAMAYI 3 SATIRLA SINIRLAR */
+    .clamp-3 {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        line-height: 1.5;
+    }
+
+    /* URL TAŞMASINI ENGELLER */
+    .break-url {
+        word-break: break-all;
+        font-size: 12px;
+        color: #fff;
+        text-decoration: underline;
+    }
+
+    /* TEKNOLOJİ YAZISI */
+    .tech-text {
+        font-size: 11px;
+        color: #FF7F00;
+        line-height: 1.4;
+    }
+</style>
+
+<div id="section-projeler" class="page-section">
+
+    <!-- ÜST BUTON -->
+    <div class="toolbar">
+        <button class="btn btn-add">
+            <i class="fa-solid fa-plus"></i> Yeni Proje Ekle
+        </button>
+    </div>
+
+    <!-- TABLO -->
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width:50px;">Id</th>
+                    <th style="width:160px;">Proje Adı</th>
+                    <th style="width:280px;">Proje Açıklaması</th>
+                    <th style="width:220px;">Kullanılan Teknolojiler</th>
+                    <th style="width:220px;">Proje URL'si</th>
+                    <th style="width:180px;">İşlemler</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @if (Model != null && Model.Any())
+                {
+                    foreach (var item in Model)
+                    {
+                        count++;
+                        <tr>
+                            <td>@count</td>
+
+                            <td>
+                                <strong>@item.ProjectName</strong>
+                            </td>
+
+                            <td>
+                                <div class="clamp-3">
+                                    @item.ProjectDescription
+                                </div>
+                            </td>
+
+                            <td>
+                                <div class="tech-text">
+                                    @item.UsingTechnologies
+                                </div>
+                            </td>
+
+                            <td>
+                                <a href="@item.ProjectUrl"
+                                   target="_blank"
+                                   class="break-url">
+                                    @item.ProjectUrl
+                                </a>
+                            </td>
+
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn btn-sm btn-edit">
+                                        <i class="fa-solid fa-pen"></i> Güncelle
+                                    </button>
+                                    <button class="btn btn-sm btn-delete">
+                                        <i class="fa-solid fa-trash"></i> Sil
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

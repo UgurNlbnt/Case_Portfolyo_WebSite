@@ -1,0 +1,58 @@
+﻿@using PortfolyoSitem.Data
+@model List<SkillsTable>
+@{
+    ViewData["Title"] = "Yetenekler";
+    Layout = "~/Views/AdminLayout/Index.cshtml";
+    int count = 0;
+}
+
+<div id="section-yetenekler" class="page-section">
+    <div class="toolbar">
+        <button class="btn btn-add">
+            <i class="fa-solid fa-plus"></i> Yeni Yetenek Ekle
+        </button>
+    </div>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 50px;">SkillId</th>
+                    <th style="width: 200px;">SkillName</th>
+                    <th>Percent (Yüzde)</th>
+                    <th style="width: 180px;">İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    count++;
+                    <tr>
+                        <td>@count</td>
+                        <td><strong>@item.SkillName</strong></td>
+                        <td>
+                            <div class="progress-wrapper">
+                                <div class="progress-container">
+                                    <div class="progress-bar" style="width: @item.SkillsPercent%;"></div>
+                                </div>
+                                <span class="progress-text">%@item.SkillsPercent</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-sm btn-edit">
+                                    <i class="fa-solid fa-pen"></i>
+                                    Güncelle
+                                </button>
+                                <button class="btn btn-sm btn-delete">
+                                    <i class="fa-solid fa-trash"></i>
+                                    Sil
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
